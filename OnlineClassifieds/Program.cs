@@ -24,6 +24,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 
 //////////////// IDENTITY //////////////////////
+#region IDENTITY
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -51,6 +52,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
     options.SlidingExpiration = true;
 });
+#endregion
 ////////////////////////////////////////////////
 
 
