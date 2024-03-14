@@ -12,7 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 // add services to the container
 builder.Services.AddRazorPages();
 
+
 //////////////// LOCALIZATION //////////////////////
+#region LOCALIZATION
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews().AddViewLocalization();
 
@@ -27,6 +29,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
+#endregion
 ////////////////////////////////////////////////////
 
 //////////////// DATABASE //////////////////////
@@ -72,6 +75,18 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 #endregion
 ////////////////////////////////////////////////
+
+
+//////////////////////// GOOGLE AUTH ////////////////////////
+string clientId = builder.Configuration.GetSection("GoogleSettings:ClientId").Value;
+string clientSecret = builder.Configuration.GetSection("GoogleSettings:ClientSecret").Value;
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = clientId;
+        options.ClientSecret = clientSecret;
+    });
+/////////////////////////////////////////////////////////////
 
 
 var app = builder.Build();

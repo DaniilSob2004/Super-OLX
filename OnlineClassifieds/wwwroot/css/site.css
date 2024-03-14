@@ -2,3 +2,7 @@
     border: none;
     background: none;
 }
+
+.border_transparent {
+   border-color: transparent;
+}

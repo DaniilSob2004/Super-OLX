@@ -1,0 +1,16 @@
+﻿@{
+    if ((Model.ExternalLogins?.Count ?? 0) != 0)
+    {
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="POST" class="form-horizontal">
+            <div class="account__social d-flex justify-content-center mb-15">
+                @foreach (var provider in Model.ExternalLogins!)
+                {
+                    string providerName = provider.Name.ToLower();
+                    <button type="submit" name="provider" value="@provider.Name" class="account__social--link @providerName border_transparent">
+                        @provider.DisplayName
+                    </button>
+                }
+            </div>
+        </form>
+    }
+}

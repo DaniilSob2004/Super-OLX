@@ -38,29 +38,11 @@
                 </div>
                 <button class="account__login--btn primary__btn mb-10" type="submit">Register</button>
             </form>
+            <div class="account__login--divide">
+                <span class="account__login--divide__text">OR</span>
+            </div>
+            <partial name="_ExternalLoginsBtns" model="@Model" />  <!-- Show external logins buttons -->
         </div>
-    </div>
-
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) != 0)
-                {
-                    <h3>Use another service to register.</h3>
-                    <hr />
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
     </div>
 </div>
 

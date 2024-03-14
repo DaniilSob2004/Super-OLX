@@ -4,27 +4,30 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
-<h2 id="external-login-title">Associate your @Model.ProviderDisplayName account.</h2>
+<h3 class="mt-4">@ViewData["Title"]</h3>
+<h4 id="external-login-title">Associate your @Model.ProviderDisplayName account.</h4>
 <hr />
 
-<p id="external-login-description" class="text-info">
-    You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
-    Please enter an email address for this site below and click the Register button to finish
-    logging in.
-</p>
-
 <div class="row">
-    <div class="col-md-4">
-        <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="email" />
-                <label asp-for="Input.Email" class="form-label"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+    <div class="account__login">
+        <div class="account__login--header mb-25">
+            <h4 class="account__login--header__title text-info mb-10">
+                You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
+                Please enter an email address for this site below and click the Register button to finish
+                logging in.
+            </h4>
+            <div class="account__login--inner">
+                <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="POST">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div>
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="account__login--input">
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+                </form>
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
+        </div>
     </div>
 </div>
 
