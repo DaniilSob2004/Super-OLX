@@ -65,7 +65,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.Name = "ITShop_Identity";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
     options.Cookie.HttpOnly = true;
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
     options.SlidingExpiration = true;

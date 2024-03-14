@@ -25,4 +25,8 @@
     <ProjectReference Include="..\OnlineClassifieds.Models\OnlineClassifieds.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\user\" />
+  </ItemGroup>
+
 </Project>
