@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 using OnlineClassifieds.DAL.Data;
 
@@ -8,8 +10,24 @@ using OnlineClassifieds.DAL.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // add services to the container
-builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+//////////////// LOCALIZATION //////////////////////
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews().AddViewLocalization();
+
+List<CultureInfo> supportedCultures = new()
+{
+    new("en"),
+    new("ru")
+};
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("en");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+////////////////////////////////////////////////////
 
 //////////////// DATABASE //////////////////////
 string connectionString =
@@ -70,6 +88,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRequestLocalization();
 
 app.MapControllerRoute(
     name: "default",

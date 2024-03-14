@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedCultures?.ToList();
+
+    string guid = Guid.NewGuid().ToString();
+    string partialViewId = guid.Substring(guid.Length - 8);
+}
+
+<li id="language__currency--list-@partialViewId" class="language__currency--list">
+    <a class="language__switcher">
+        <img class="language__switcher--icon__img">
+        <span class="langName"></span> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="11.797" height="9.05" viewBox="0 0 9.797 6.05">
+            <path d="M14.646,8.59,10.9,12.329,7.151,8.59,6,9.741l4.9,4.9,4.9-4.9Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
+        </svg>
+    </a>
+    @if (cultureItems is not null)
+    {
+        <div class="dropdown__language">
+            <ul>
+                @foreach(var culture in cultureItems)
+                {
+                    <li class="language__items">
+                        <a class="language__text language__text-@partialViewId" data-culture="@culture.Name">@culture.NativeName</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</li>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // записывает куки для культуры и обновляет страницу
+        function SetLanguage(culture) {
+            document.cookie = ".AspNetCore.Culture=c=" + culture + "|uic=" + culture;
+            location.reload();
+        }
+
+        // отображаем выбранный язык (с помощью куки)
+        const selectedCultureCookie = document.cookie.split("; ")
+            .find(row => row.startsWith(".AspNetCore.Culture="));
+        if (selectedCultureCookie) {
+            // смена текста языка
+            const selectedCulture = selectedCultureCookie.split("=")[3];
+            $(".langName").text(selectedCulture);
+
+            // смена картинки
+            $(".language__switcher--icon__img").attr("src", `/icon/${selectedCulture}-icon.png`);
+        }
+        else {
+            SetLanguage("en");
+        }
+        
+        // клик по списку, и показываем список языков
+        $("#language__currency--list-@partialViewId").click(function () {
+            $(".dropdown__language").removeClass("active");
+            $(this).find(".dropdown__language").addClass("active");
+        });
+
+        // когда курсор покидает область выбора языка, то прячем этот список
+        $(".dropdown__language").mouseleave(function () {
+            $(this).removeClass("active");
+        });
+
+        // клик по языку, записываем куки для культуры
+        $(".language__text-@partialViewId").click(function () {
+            const culture = $(this).attr("data-culture");
+            SetLanguage(culture);
+        });
+    });
+</script>

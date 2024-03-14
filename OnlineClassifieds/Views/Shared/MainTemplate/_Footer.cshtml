@@ -1,7 +1,10 @@
-﻿<div class="container-fluid">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<div class="container-fluid">
     <div class="main__footer d-flex justify-content-between">
         <div class="footer__widget footer__widget--width">
-            <h2 class="footer__widget--title text-ofwhite h3">About Us 
+            <h2 class="footer__widget--title text-ofwhite h3">@Localizer["AboutUs"]
                 <button class="footer__widget--button" aria-label="footer widget button">
                     <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
                         <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OnlineClassifieds.Models;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+
+using OnlineClassifieds.Models;
 
 namespace OnlineClassifieds.Controllers
 {
@@ -13,10 +15,24 @@ namespace OnlineClassifieds.Controllers
             _logger = logger;
         }
 
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            // добавление куки в ответ
+            HttpContext.Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(1) }
+            );
+            return LocalRedirect(returnUrl);
+        }
+
         public IActionResult Index()
         {
             return View();
         }
+
 
         public IActionResult Privacy()
         {
