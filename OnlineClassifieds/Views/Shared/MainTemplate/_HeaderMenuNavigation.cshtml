@@ -1,37 +1,50 @@
-﻿<nav class="header__menu--navigation">
-    <ul class="d-flex">
-        <li class="header__menu--items">
-            <a class="header__menu--link" href="about.html">Home </a>  
-        </li>
-        <li class="header__menu--items">
-            <a class="header__menu--link" href="about.html">About US </a>  
-        </li>
-        <li class="header__menu--items d-none d-xl-block">
-            <a class="header__menu--link" href="#">Categories 
-                <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41" viewBox="0 0 12 7.41">
-                    <path  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
-                </svg>
-            </a>
-            <ul class="header__sub--menu">
-                <li class="header__sub--menu__items"><a href="about.html" class="header__sub--menu__link">Accessories</a></li>
-                <li class="header__sub--menu__items"><a href="contact.html" class="header__sub--menu__link">Shorts</a></li>
-            </ul>  
-        </li>
-        <li class="header__menu--items">
-            <a class="header__menu--link" href="#">Pages 
-                <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41" viewBox="0 0 12 7.41">
-                    <path  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
-                </svg>
-            </a>
-            <ul class="header__sub--menu">
-                <li class="header__sub--menu__items"><a href="about.html" class="header__sub--menu__link">About Us</a></li>
-                <li class="header__sub--menu__items"><a href="contact.html" class="header__sub--menu__link">Contact Us</a></li>
-                <li class="header__sub--menu__items"><a href="cart.html" class="header__sub--menu__link">Cart Page</a></li>
-                <li class="header__sub--menu__items"><a href="portfolio.html" class="header__sub--menu__link">Portfolio Page</a></li>
-                <li class="header__sub--menu__items"><a href="wishlist.html" class="header__sub--menu__link">Wishlist Page</a></li>
-                <li class="header__sub--menu__items"><a href="login.html" class="header__sub--menu__link">Login Page</a></li>
-                <li class="header__sub--menu__items"><a href="404.html" class="header__sub--menu__link">Error Page</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+﻿@inject IViewLocalizer Localizer
+
+<div class="header__bottom">
+    <div class="container-fluid">
+        <div class="header__bottom--inner position__relative d-none d-lg-flex justify-content-between align-items-center">
+            <div class="header__menu">
+                <nav class="header__menu--navigation">
+                    <ul class="d-flex">
+                        <li class="header__menu--items">
+                            <a class="header__menu--link" href="about.html">@Localizer["Home_Title"] </a>
+                        </li>
+                        <li class="header__menu--items">
+                            <a class="header__menu--link" href="about.html">@Localizer["AboutUs_Title"] </a>  
+                        </li>
+                        <li class="header__menu--items d-none d-xl-block">
+                            <a class="header__menu--link" href="#">Categories 
+                                <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41" viewBox="0 0 12 7.41">
+                                    <path  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
+                                </svg>
+                            </a>
+                            <ul class="header__sub--menu">
+                                <li class="header__sub--menu__items"><a href="about.html" class="header__sub--menu__link">Accessories</a></li>
+                                <li class="header__sub--menu__items"><a href="contact.html" class="header__sub--menu__link">Shorts</a></li>
+                            </ul>  
+                        </li>
+                        <li class="header__menu--items">
+                            <a class="header__menu--link" href="#">@Localizer["Pages_Title"] 
+                                <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41" viewBox="0 0 12 7.41">
+                                    <path  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
+                                </svg>
+                            </a>
+                            <ul class="header__sub--menu">
+                                <li class="header__sub--menu__items"><a href="about.html" class="header__sub--menu__link">About Us</a></li>
+                                <li class="header__sub--menu__items"><a href="contact.html" class="header__sub--menu__link">Contact Us</a></li>
+                                <li class="header__sub--menu__items"><a href="cart.html" class="header__sub--menu__link">Cart Page</a></li>
+                                <li class="header__sub--menu__items"><a href="portfolio.html" class="header__sub--menu__link">Portfolio Page</a></li>
+                                <li class="header__sub--menu__items"><a href="wishlist.html" class="header__sub--menu__link">Wishlist Page</a></li>
+                                <li class="header__sub--menu__items"><a href="login.html" class="header__sub--menu__link">Login Page</a></li>
+                                <li class="header__sub--menu__items"><a href="404.html" class="header__sub--menu__link">Error Page</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <p class="header__discount--text"><img class="header__discount--icon__img" src="~/icon/lamp.png" alt="lamp-img">
+                @Localizer["Message_Info"]
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,11 @@
-﻿<div class="header__topbar bg__secondary">
+﻿@inject IViewLocalizer Localizer
+
+<div class="header__topbar bg__secondary">
     <div class="container-fluid">
         <div class="header__topbar--inner d-flex align-items-center justify-content-between">
             <div class="header__shipping">
                 <ul class="header__shipping--wrapper d-flex">
-                    <li class="header__shipping--text text-white">Welcome to Super OLX</li>
+                    <li class="header__shipping--text text-white">@Localizer["Welcome_Message"]</li>
                 </ul>
             </div>
             <div class="language__currency d-none d-lg-block">

@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Localization
-@using Microsoft.Extensions.Options
+﻿@using Microsoft.Extensions.Options
 @inject IOptions<RequestLocalizationOptions> LocOptions
 
 @{
@@ -38,7 +37,7 @@
     $(document).ready(function() {
         // записывает куки для культуры и обновляет страницу
         function SetLanguage(culture) {
-            document.cookie = ".AspNetCore.Culture=c=" + culture + "|uic=" + culture;
+            document.cookie = ".AspNetCore.Culture=c=" + culture + "|uic=" + culture + ";path=/";
             location.reload();
         }
 

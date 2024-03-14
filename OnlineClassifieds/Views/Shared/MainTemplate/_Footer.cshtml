@@ -1,10 +1,9 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
+﻿@inject IViewLocalizer Localizer
 
 <div class="container-fluid">
     <div class="main__footer d-flex justify-content-between">
         <div class="footer__widget footer__widget--width">
-            <h2 class="footer__widget--title text-ofwhite h3">@Localizer["AboutUs"]
+            <h2 class="footer__widget--title text-ofwhite h3">@Localizer["AboutUs_Title"]
                 <button class="footer__widget--button" aria-label="footer widget button">
                     <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
                         <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
@@ -13,12 +12,12 @@
             </h2>
             <div class="footer__widget--inner">
                 <p class="footer__widget--desc text-ofwhite mb-20">
-                    We provide a platform for convenient and safe posting of advertisements for the sale and purchase of goods.<br />
-                    Our mission is to create a space where everyone can find what they need, and where sellers can find their buyers without any hassle.<br />
-                    Join us and start your trading success now!<br />
+                    @Localizer["AboutUs_Text1"]<br />
+                    @Localizer["AboutUs_Text2"]<br />
+                    @Localizer["AboutUs_Text3"]<br />
                 </p>
                 <div class="footer__social">
-                    <h3 class="social__title text-ofwhite h4 mb-15">Follow Us</h3>
+                    <h3 class="social__title text-ofwhite h4 mb-15">@Localizer["FollowUs_Title"]</h3>
                     <ul class="social__shear d-flex">
                         <li class="social__shear--list">
                             <a class="social__shear--list__icon" target="_blank" href="https://www.instagram.com/soboliev_daniil/">
@@ -33,33 +32,34 @@
             </div>
         </div>
         <div class="footer__widget footer__widget--width">
-            <h2 class="footer__widget--title text-ofwhite h3">Newsletter 
-                    <button class="footer__widget--button" aria-label="footer widget button">
-                        <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
-                            <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
-                        </svg>
-                    </button>
+            <h2 class="footer__widget--title text-ofwhite h3">@Localizer["Newsletter_Title"] 
+                <button class="footer__widget--button" aria-label="footer widget button">
+                    <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
+                        <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
+                    </svg>
+                </button>
             </h2>
             <div class="footer__widget--inner">
                 <p class="footer__widget--desc text-ofwhite m-0">
-                    Unique discounts and promotions are waiting for you!<br />
-                    Subscribe to our newsletter now:
+                    @Localizer["Newsletter_Text1"] <br />
+                    @Localizer["Newsletter_Text2"]
                 </p> 
                 <div class="newsletter__subscribe">
                     <form class="newsletter__subscribe--form" action="#">
                         <label>
-                            <input class="newsletter__subscribe--input" placeholder="Email Address" type="email">
+                            <input class="newsletter__subscribe--input" placeholder="@Localizer["EmailAddress_PH"]" type="email">
                         </label>
-                        <button class="newsletter__subscribe--button" type="submit">Subscribe</button>
+                        <button class="newsletter__subscribe--button" type="submit">@Localizer["Subscribe_Title"]</button>
                     </form>   
                 </div> 
             </div> 
         </div>
     </div>
     <div class="footer__bottom d-flex justify-content-between align-items-center">
-        <p class="copyright__content text-ofwhite m-0">Online Classifieds © 2024
+        <p class="copyright__content text-ofwhite m-0"> 
+            @Localizer["OnlineClassifieds_Text1"] © 2024
             <a class="copyright__content--link" href="https://github.com/DaniilSob2004" target="_blank">GitHub</a> .
-            All Rights Reserved.Design By Soboliev Daniil
+            @Localizer["OnlineClassifieds_Text2"]
         </p>
     </div>
 </div>

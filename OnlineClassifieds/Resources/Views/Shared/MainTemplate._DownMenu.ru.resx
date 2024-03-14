@@ -117,41 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutUs_Text1" xml:space="preserve">
-    <value>Предоставляем площадку для удобного и безопасного размещения объявлений о продаже и покупке товаров.</value>
+  <data name="Home_Text" xml:space="preserve">
+    <value>Главная</value>
   </data>
-  <data name="AboutUs_Text2" xml:space="preserve">
-    <value>Наша миссия — создать пространство, где каждый сможет найти то, что ему нужно, а продавцы смогут без проблем найти своих покупателей.</value>
+  <data name="Search_Text" xml:space="preserve">
+    <value>Поиск</value>
   </data>
-  <data name="AboutUs_Text3" xml:space="preserve">
-    <value>Присоединяйтесь к нам и начните свой успех в торговле прямо сейчас!</value>
-  </data>
-  <data name="AboutUs_Title" xml:space="preserve">
-    <value>О нас</value>
-  </data>
-  <data name="EmailAddress_PH" xml:space="preserve">
-    <value>Ваш Email</value>
-    <comment>Place holder для email</comment>
-  </data>
-  <data name="FollowUs_Title" xml:space="preserve">
-    <value>Подписывайтесь на нас</value>
-  </data>
-  <data name="Newsletter_Text1" xml:space="preserve">
-    <value>Вас ждут уникальные скидки и акции!</value>
-  </data>
-  <data name="Newsletter_Text2" xml:space="preserve">
-    <value>Подпишитесь на нашу рассылку прямо сейчас:</value>
-  </data>
-  <data name="Newsletter_Title" xml:space="preserve">
-    <value>Новостная рассылка</value>
-  </data>
-  <data name="OnlineClassifieds_Text1" xml:space="preserve">
-    <value>Интернет объявления</value>
-  </data>
-  <data name="OnlineClassifieds_Text2" xml:space="preserve">
-    <value>Все права защищены. Дизайн: Соболев Даниил.</value>
-  </data>
-  <data name="Subscribe_Title" xml:space="preserve">
-    <value>Подписаться</value>
+  <data name="Wishlist_Text" xml:space="preserve">
+    <value>Избранное</value>
   </data>
 </root>

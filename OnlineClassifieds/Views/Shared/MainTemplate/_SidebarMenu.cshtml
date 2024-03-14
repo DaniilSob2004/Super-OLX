@@ -1,4 +1,6 @@
-﻿<div class="offcanvas__header">
+﻿@inject IViewLocalizer Localizer
+
+<div class="offcanvas__header">
     <div class="offcanvas__inner">
         <div class="offcanvas__logo">
             <a class="offcanvas__logo_link" asp-controller="Home" asp-action="Index">
@@ -9,11 +11,11 @@
         <nav class="offcanvas__menu">
             <ul class="offcanvas__menu_ul">
                 <li class="offcanvas__menu_li">
-                    <a class="offcanvas__menu_item" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="offcanvas__menu_item" asp-controller="Home" asp-action="Index">@Localizer["Home_Title"]</a>
                 </li>
-                <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">About US</a></li>
+                <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">@Localizer["AboutUs_Title"]</a></li>
                 <li class="offcanvas__menu_li">
-                    <a class="offcanvas__menu_item" href="#">Pages</a>
+                    <a class="offcanvas__menu_item" href="#">@Localizer["Pages_Title"]</a>
                     <ul class="offcanvas__sub_menu">
                         <li class="offcanvas__sub_menu_li"><a href="about.html" class="offcanvas__sub_menu_item">About Us</a></li>
                         <li class="offcanvas__sub_menu_li"><a href="contact.html" class="offcanvas__sub_menu_item">Contact Us</a></li>
@@ -30,7 +32,7 @@
                     <span class="offcanvas__account--items__icon"> 
                         <svg xmlns="http://www.w3.org/2000/svg"  width="20.51" height="19.443" viewBox="0 0 512 512"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/></svg> 
                     </span>
-                    <span class="offcanvas__account--items__label">Login / Register</span>
+                    <span class="offcanvas__account--items__label">@Localizer["LoginRegister_Text"]</span>
                 </a>
             </div>
             <div class="language__currency">

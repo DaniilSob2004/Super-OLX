@@ -117,7 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutUs" xml:space="preserve">
+  <data name="AboutUs_Text1" xml:space="preserve">
+    <value>We provide a platform for convenient and safe posting of advertisements for the sale and purchase of goods.</value>
+  </data>
+  <data name="AboutUs_Text2" xml:space="preserve">
+    <value>Our mission is to create a space where everyone can find what they need, and where sellers can find their buyers without any hassle.</value>
+  </data>
+  <data name="AboutUs_Text3" xml:space="preserve">
+    <value>Join us and start your trading success now!</value>
+  </data>
+  <data name="AboutUs_Title" xml:space="preserve">
     <value>About US</value>
+  </data>
+  <data name="EmailAddress_PH" xml:space="preserve">
+    <value>Email Address</value>
+    <comment>Place holder для email</comment>
+  </data>
+  <data name="FollowUs_Title" xml:space="preserve">
+    <value>Follow Us</value>
+  </data>
+  <data name="Newsletter_Text1" xml:space="preserve">
+    <value>Unique discounts and promotions are waiting for you!</value>
+  </data>
+  <data name="Newsletter_Text2" xml:space="preserve">
+    <value>Subscribe to our newsletter now:</value>
+  </data>
+  <data name="Newsletter_Title" xml:space="preserve">
+    <value>Newsletter</value>
+  </data>
+  <data name="OnlineClassifieds_Text1" xml:space="preserve">
+    <value>Online Classifieds</value>
+  </data>
+  <data name="OnlineClassifieds_Text2" xml:space="preserve">
+    <value>All Rights Reserved.Design By Soboliev Daniil</value>
+  </data>
+  <data name="Subscribe_Title" xml:space="preserve">
+    <value>Subscribe</value>
   </data>
 </root>
