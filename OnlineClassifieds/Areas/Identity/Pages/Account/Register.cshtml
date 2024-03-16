@@ -33,8 +33,8 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="mb-4">
-                    <label for="uploadBox" class="form-label">@Html.DisplayNameFor(model => model.Input.Avatar)</label>
-                    <input class="form-control form-control-lg" type="file" id="uploadBox">
+                    <label asp-for="Input.Avatar" class="form-label">@Html.DisplayNameFor(model => model.Input.Avatar)</label>
+                    <input type="file" name="files" id="uploadBox" class="form-control form-control-lg">
                 </div>
                 <button class="account__login--btn primary__btn mb-10" type="submit">Register</button>
             </form>

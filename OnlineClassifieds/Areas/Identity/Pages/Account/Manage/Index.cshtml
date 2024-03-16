@@ -1,8 +1,13 @@
 ﻿@page
 @model IndexModel
+@inject CurrentUserProvider CurrentUserProvider
+@inject IUserRepository UserRepository
+
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
+
+    string avatarName = UserRepository.GetAvatar(await CurrentUserProvider.GetCurrentUser());
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
@@ -12,16 +17,37 @@
             <h2 class="account__login--header__title h3 mb-10">@ViewData["Title"]</h2>
         </div>
         <div class="account__login--inner">
-            <form id="profile-form" method="POST">
+            <form id="profile-form" method="POST" asp-controller="User" asp-action="Edit" asp-route-userVM="@Model.UserVM" enctype="multipart/form-data">
+                <input type="hidden" asp-for="UserVM.User.Id" />
+
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <img src="@WC.ImageUserPath@avatarName" class="big_user_avatar" />
+                    @if (!avatarName.Contains("default"))  // если аватарка у пользователя есть
+                    {
+                         <a class="mt-2" asp-controller="User" asp-action="DeleteAvatar" asp-route-id="@Model.UserVM.User.Id">
+                            Delete
+                        </a>
+                    }
+                </div>
+
                 <div>
-                    <label asp-for="Username"></label>
-                    <input asp-for="Username" class="account__login--input">
-                    <span asp-validation-for="Username" class="text-danger"></span>
+                    <label asp-for="UserVM.User.Email"></label>
+                    <input asp-for="UserVM.User.Email" class="account__login--input">
+                    <span asp-validation-for="UserVM.User.Email" class="text-danger"></span>
                 </div>
                 <div>
-                    <label asp-for="Input.PhoneNumber"></label>
-                    <input asp-for="Input.PhoneNumber" class="account__login--input">
-                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    <label asp-for="UserVM.User.PhoneNumber"></label>
+                    <input asp-for="UserVM.User.PhoneNumber" class="account__login--input">
+                    <span asp-validation-for="UserVM.User.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="UserVM.User.FullName"></label>
+                    <input asp-for="UserVM.User.FullName" class="account__login--input">
+                    <span asp-validation-for="UserVM.User.FullName" class="text-danger"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="UserVM.User.Avatar" class="form-label">@Html.DisplayNameFor(model => model.UserVM.User.Avatar)</label>
+                    <input type="file" name="files" id="uploadBox" class="form-control form-control-lg">
                 </div>
                 <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
             </form>

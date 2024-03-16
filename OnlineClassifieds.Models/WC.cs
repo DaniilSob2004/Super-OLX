@@ -1,4 +1,4 @@
-﻿namespace Shop
+﻿namespace OnlineClassifieds
 {
     public static class WC
     {

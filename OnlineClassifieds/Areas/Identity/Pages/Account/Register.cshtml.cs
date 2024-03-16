@@ -12,13 +12,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
+using OnlineClassifieds.DAL.Data;
 using OnlineClassifieds.Models;
-using Shop;
+using OnlineClassifieds.Services;
 
 namespace OnlineClassifieds.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
+        private readonly DataContext _db;
+        private readonly FilesWorkService _filesWorkService;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUserStore<IdentityUser> _userStore;
@@ -28,6 +31,8 @@ namespace OnlineClassifieds.Areas.Identity.Pages.Account
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public RegisterModel(
+            DataContext db,
+            FilesWorkService filesWorkService,
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
@@ -35,6 +40,8 @@ namespace OnlineClassifieds.Areas.Identity.Pages.Account
             IEmailSender emailSender,
             IWebHostEnvironment webHostEnvironment)
         {
+            _db = db;
+            _filesWorkService = filesWorkService;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -109,14 +116,10 @@ namespace OnlineClassifieds.Areas.Identity.Pages.Account
                     var files = HttpContext.Request.Form.Files;
                     if (files.Count != 0)
                     {
-                        string uploadDir = _webHostEnvironment.WebRootPath + WC.ImageUserPath;
-                        string filename = Guid.NewGuid().ToString();
-                        string extension = Path.GetExtension(files[0].FileName);
-                        using (var fileStream = new FileStream(Path.Combine(uploadDir, filename + extension), FileMode.Create))
-                        {
-                            await files[0].CopyToAsync(fileStream);
-                        }
-                        user.Avatar = filename + extension;
+                        // загружаем картинку на сервер и сохраняем
+                        string newFilename = await _filesWorkService.DownloadFileForm(WC.ImageUserPath, files[0], user.Avatar);
+                        user.Avatar = newFilename;
+                        await _db.SaveChangesAsync();
                     }
 
                     // отправка подтверждения почты (если установлено в настройке в program.cs)

@@ -6,3 +6,16 @@
 .border_transparent {
    border-color: transparent;
 }
+
+.user_avatar, .small_user_avatar, .big_user_avatar {
+    object-fit: cover;
+    border-radius: 50%;
+}
+.small_user_avatar {
+    width: 30px;
+    height: 30px;
+}
+.big_user_avatar {
+    width: 100px;
+    height: 100px;
+}

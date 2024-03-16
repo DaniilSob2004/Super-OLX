@@ -35,6 +35,26 @@ namespace OnlineClassifieds.DAL.Repository
             await _userManager.AddToRoleAsync(user, role);
         }
 
+        public string GetAvatar(User? user)
+        {
+            return (user is not null && user.Avatar is not null) ?
+                user.Avatar :
+                "default_avatar.png";
+        }
+
+        public async Task<string?> DeleteAvatar(string id)
+        {
+            var user = await this.FirstOrDefault(u => u.Id.Equals(id), isTracking: true);
+            if (user is not null)
+            {
+                string? filename = user.Avatar;
+                user.Avatar = null;
+                await this.Save();
+                return filename;
+            }
+            return null;
+        }
+
         public async Task<string?> GetRole(User user)
         {
             if (user is null) { return null; }
@@ -45,6 +65,16 @@ namespace OnlineClassifieds.DAL.Repository
                 roles += $"{role} ";
             }
             return roles.Trim();
+        }
+
+        public async Task<string?> GetPhoneNumber(User user)
+        {
+            return await _userManager.GetPhoneNumberAsync(user);
+        }
+
+        public async Task<IdentityResult> SetPhoneNumber(User user, string phoneNumber)
+        {
+            return await _userManager.SetPhoneNumberAsync(user, phoneNumber);
         }
 
         public async Task<User?> Find(string id)
@@ -65,6 +95,12 @@ namespace OnlineClassifieds.DAL.Repository
         {
             user.FullName = oldUser.FullName;
             user.Email = oldUser.Email;
+            user.Avatar = oldUser.Avatar;
+            _db.Update(user);
+        }
+
+        public void Update(User user)
+        {
             _db.Update(user);
         }
 

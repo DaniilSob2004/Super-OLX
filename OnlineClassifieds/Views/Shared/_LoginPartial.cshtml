@@ -1,15 +1,18 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
 @inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject CurrentUserProvider CurrentUserProvider
 @inject IViewLocalizer Localizer
+
+@{
+    var user = await CurrentUserProvider.GetCurrentUser();
+    string textUserHello = $"Hello {(user is null ? "" : user.FullName)}";
+}
 
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="header__shipping--text text-white">
-        <span>
-            Hello, @(((User)(await UserManager.GetUserAsync(User))).FullName)
-        </span>
+        <span>@textUserHello</span>
     </li>
     <li class="header__shipping--text text-white">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

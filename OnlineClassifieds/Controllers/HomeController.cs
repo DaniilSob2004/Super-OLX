@@ -1,32 +1,22 @@
-﻿using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 using OnlineClassifieds.Models;
+using OnlineClassifieds.Services;
 
 namespace OnlineClassifieds.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly CurrentUserProvider _currentUserProvider;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, CurrentUserProvider currentUserProvider)
         {
             _logger = logger;
+            _currentUserProvider = currentUserProvider;
         }
 
-
-        [HttpPost]
-        public IActionResult SetLanguage(string culture, string returnUrl)
-        {
-            // добавление куки в ответ
-            HttpContext.Response.Cookies.Append(
-                CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(1) }
-            );
-            return LocalRedirect(returnUrl);
-        }
 
         public IActionResult Index()
         {
@@ -34,7 +24,7 @@ namespace OnlineClassifieds.Controllers
         }
 
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
             return View();
         }

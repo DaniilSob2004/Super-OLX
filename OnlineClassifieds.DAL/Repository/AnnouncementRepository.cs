@@ -37,7 +37,7 @@ namespace OnlineClassifieds.DAL.Repository
 
         public SelectList? GetAllDropDownList(string obj)
         {
-            if (obj.Equals(Shop.WC.DropDownListCategory))
+            if (obj.Equals(WC.DropDownListCategory))
             {
                 return new SelectList(_db.Categories, "Id", "Name");
             }

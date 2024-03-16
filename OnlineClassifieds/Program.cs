@@ -5,12 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 using OnlineClassifieds.DAL.Data;
-
+using OnlineClassifieds.DAL.Repository.IRepository;
+using OnlineClassifieds.DAL.Repository;
+using OnlineClassifieds.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // add services to the container
 builder.Services.AddRazorPages();
+
+// add my services
+builder.Services.AddScoped<CurrentUserProvider>();
+builder.Services.AddSingleton<FilesWorkService>();
 
 
 //////////////// LOCALIZATION //////////////////////
@@ -87,6 +93,11 @@ builder.Services.AddAuthentication()
         options.ClientSecret = clientSecret;
     });
 /////////////////////////////////////////////////////////////
+
+
+//////////////////////// REPOSITORY ////////////////////////
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+////////////////////////////////////////////////////////////
 
 
 var app = builder.Build();
