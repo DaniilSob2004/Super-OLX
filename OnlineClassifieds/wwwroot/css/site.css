@@ -7,6 +7,10 @@
    border-color: transparent;
 }
 
+.middle_font_size {
+    font-size: 1.35rem;
+}
+
 .user_avatar, .small_user_avatar, .big_user_avatar {
     object-fit: cover;
     border-radius: 50%;
@@ -18,4 +22,16 @@
 .big_user_avatar {
     width: 100px;
     height: 100px;
+}
+.small_message_icon {
+    width: 24px;
+    height: 24px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.title_announcement:hover {
+    color: var(--secondary-color);
 }

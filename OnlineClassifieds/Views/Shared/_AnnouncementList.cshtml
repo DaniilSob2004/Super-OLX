@@ -1,0 +1,17 @@
+﻿@model OnlineClassifieds.ViewModels.AnnouncementVM
+
+@* кол-во обявлений которые нужно пропустить *@
+@{ int numsSkip = (Model.Pager.CurrentPage - 1) * Model.Pager.PageSize; }
+
+<div class="product__section--inner mb-5">
+    <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
+        @foreach (var announ in Model.Announcements
+            .Skip(numsSkip)
+            .Take(Model.Pager.PageSize))
+        {
+            <partial name="_AnnouncementCart" model=@announ />  <!-- view для карточки объявления -->
+        }
+    </div>
+</div>
+
+@await Html.PartialAsync("_Pager", Model.Pager)  <!-- View для отображения пагинации -->

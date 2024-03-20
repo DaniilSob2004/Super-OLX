@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\User\" />
+    <Folder Include="wwwroot\images\announcement\" />
     <Folder Include="wwwroot\images\user\" />
   </ItemGroup>
 

@@ -1,0 +1,23 @@
+﻿@inject CurrentUserProvider CurrentUserProvider
+@inject IUserRepository UserRepository
+@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
+
+@{
+    var user = await CurrentUserProvider.GetCurrentUser();
+    string avatarName = UserRepository.GetAvatar(user);
+}
+
+<li class="header__menu--items d-none d-md-block">
+    <a class="header__account--btn" asp-area="Identity" asp-page="/Account/Manage/Index">
+        <img src="@WC.ImageUserPath@avatarName" class="small_user_avatar" />
+        <span class="header__account--btn__text">@Localizer["MyAccount_Text"]</span>
+    </a>
+    <ul class="header__sub--menu">
+        <li class="header__sub--menu__items">
+            <a asp-controller="Announcement" asp-action="Create" class="header__sub--menu__link">@Localizer["AddAnnouncment_Menu"]</a>
+        </li>
+        <li class="header__sub--menu__items">
+            <a asp-controller="Announcement" asp-action="GetUserAnnouncement" class="header__sub--menu__link">@Localizer["MyAnnouncment_Menu"]</a>
+        </li>
+    </ul>  
+</li>

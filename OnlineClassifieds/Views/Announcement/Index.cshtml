@@ -1,0 +1,25 @@
+﻿@model OnlineClassifieds.ViewModels.AnnouncementVM
+@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.PageResource> Localizer
+
+<section class="product__section section--padding pt-0">
+    <div class="container-fluid">
+        <div class="section__heading text-center mb-35">
+            <h2 class="section__heading--maintitle">@Localizer["Announcements_Text"]</h2>
+        </div>
+        @*<ul class="product__tab--one product__tab--primary__btn d-flex justify-content-center mb-50">
+            <li class="product__tab--primary__btn__list">Sorted by </li>
+            <li class="product__tab--primary__btn__list active" data-toggle="tab" data-target="#trending">Trending </li>
+            <li class="product__tab--primary__btn__list" data-toggle="tab" data-target="#newarrival">New Arrival  </li>
+        </ul>*@
+        <div class="tab_content">
+            <!-- вкладка (Trending) -->
+            <div id="trending" class="tab_pane active show mb-5">
+                <partial name="_AnnouncementList" model=@Model />
+            </div>
+
+            <!-- вкладка (New Arrival) -->
+            @*<div id="newarrival" class="tab_pane">
+            </div>*@
+        </div>
+    </div>
+</section>

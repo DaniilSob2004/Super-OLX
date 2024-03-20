@@ -2,29 +2,25 @@
 using System.Diagnostics;
 
 using OnlineClassifieds.Models;
-using OnlineClassifieds.Services;
 
 namespace OnlineClassifieds.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly CurrentUserProvider _currentUserProvider;
 
-        public HomeController(ILogger<HomeController> logger, CurrentUserProvider currentUserProvider)
+        public HomeController(
+            ILogger<HomeController> logger)
         {
             _logger = logger;
-            _currentUserProvider = currentUserProvider;
         }
 
-
-        public IActionResult Index()
+        public IActionResult AboutUs()
         {
             return View();
         }
 
-
-        public async Task<IActionResult> Privacy()
+        public IActionResult Privacy()
         {
             return View();
         }

@@ -1,4 +1,4 @@
-﻿@inject IViewLocalizer Localizer
+﻿@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
 
 <div class="offcanvas__header">
     <div class="offcanvas__inner">
@@ -11,11 +11,11 @@
         <nav class="offcanvas__menu">
             <ul class="offcanvas__menu_ul">
                 <li class="offcanvas__menu_li">
-                    <a class="offcanvas__menu_item" asp-controller="Home" asp-action="Index">@Localizer["Home_Title"]</a>
+                    <a class="offcanvas__menu_item" asp-controller="Announcement" asp-action="Index">@Localizer["Home_Text"]</a>
                 </li>
-                <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">@Localizer["AboutUs_Title"]</a></li>
+                <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">@Localizer["AboutUs_Text"]</a></li>
                 <li class="offcanvas__menu_li">
-                    <a class="offcanvas__menu_item" href="#">@Localizer["Pages_Title"]</a>
+                    <a class="offcanvas__menu_item" href="#">@Localizer["Pages_Text"]</a>
                     <ul class="offcanvas__sub_menu">
                         <li class="offcanvas__sub_menu_li"><a href="about.html" class="offcanvas__sub_menu_item">About Us</a></li>
                         <li class="offcanvas__sub_menu_li"><a href="contact.html" class="offcanvas__sub_menu_item">Contact Us</a></li>

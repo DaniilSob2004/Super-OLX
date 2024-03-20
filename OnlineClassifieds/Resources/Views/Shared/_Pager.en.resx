@@ -117,20 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AllCategories_Text" xml:space="preserve">
-    <value>Все категории</value>
+  <data name="Back_Text" xml:space="preserve">
+    <value>Back</value>
   </data>
-  <data name="Home_Text" xml:space="preserve">
-    <value>Главная</value>
+  <data name="First_Text" xml:space="preserve">
+    <value>First</value>
   </data>
-  <data name="MyAccount_Text" xml:space="preserve">
-    <value>Мой аккаунт</value>
+  <data name="Forward_Text" xml:space="preserve">
+    <value>Forward</value>
   </data>
-  <data name="SearchCategory_PH" xml:space="preserve">
-    <value>Поиск...</value>
-    <comment>Place holder для поиска категорий</comment>
-  </data>
-  <data name="WishList_Text" xml:space="preserve">
-    <value>Избранное</value>
+  <data name="Last_Text" xml:space="preserve">
+    <value>Last</value>
   </data>
 </root>

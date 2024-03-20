@@ -20,7 +20,7 @@ namespace OnlineClassifieds.Models
         public string Title { get; set; } = null!;
 
         [DisplayName("Price")]
-        [Range(0, 1000000, ErrorMessage = "Price must be from {1} to {2}")]
+        [Range(1, 1000000, ErrorMessage = "Price must be from {1} to {2}")]
         public float Price { get; set; }
 
         [DisplayName("Description")]
@@ -28,7 +28,7 @@ namespace OnlineClassifieds.Models
         public string Description { get; set; } = null!;
 
         [DisplayName("Image")]
-        public string Image { get; set; } = null!;
+        public string? Image { get; set; } = null!;
 
         [DisplayName("City")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "City must be from {1} to {2}")]

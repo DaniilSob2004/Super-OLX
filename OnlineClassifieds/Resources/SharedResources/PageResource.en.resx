@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Login_Text" xml:space="preserve">
-    <value>Войти</value>
+  <data name="Announcements_Text" xml:space="preserve">
+    <value>Announcements</value>
   </data>
-  <data name="Logout_Text" xml:space="preserve">
-    <value>Выйти</value>
-  </data>
-  <data name="Register_Text" xml:space="preserve">
-    <value>Зарегистрироваться</value>
+  <data name="EmptyUserAnnoun_Text" xml:space="preserve">
+    <value>You don't have any announcements...</value>
   </data>
 </root>

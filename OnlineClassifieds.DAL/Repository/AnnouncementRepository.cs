@@ -15,6 +15,13 @@ namespace OnlineClassifieds.DAL.Repository
             _db = db;
         }
 
+        public override async Task Add(Announcement entity)
+        {
+            entity.IsActive = true;
+            entity.CreateDt = DateTime.Now;
+            await base.Add(entity);
+        }
+
         public override async Task Remove(Announcement entity)
         {
             entity.DeleteDt = DateTime.Now;
@@ -33,6 +40,13 @@ namespace OnlineClassifieds.DAL.Repository
         public void Update(Announcement announcement)
         {
             _db.Update(announcement);
+        }
+
+        public string GetImage(Announcement announcement)
+        {
+            return (announcement.Image is not null) ?
+                announcement.Image :
+                "default_announcement.png";
         }
 
         public SelectList? GetAllDropDownList(string obj)

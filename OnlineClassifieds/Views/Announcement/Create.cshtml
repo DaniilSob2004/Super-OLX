@@ -1,0 +1,49 @@
+﻿@model OnlineClassifieds.Models.Announcement
+
+<div class="row">
+    <div class="account__login register">
+        <div class="account__login--header mb-25">
+            <h2 class="account__login--header__title h3 mb-10">Create an Announcement</h2>
+            <p class="account__login--header__desc">Describe in detail</p>
+        </div>
+        <div class="account__login--inner">
+            <form method="POST" id="createAnnounForm" asp-action="Create" enctype="multipart/form-data">
+                <div>
+                    <label asp-for="Image" class="form-label">@Html.DisplayNameFor(model => model.Image)</label>
+                    <input type="file" name="files" id="uploadBox" class="form-control form-control-lg">
+                </div>
+                <div class="mt-5">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="account__login--input">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div>
+                    <select class="w-100 p-3 middle_font_size" asp-for="IdCat" asp-items="ViewBag.CategoryItems">
+                        <option disabled selected>@Html.DisplayNameFor(model => model.IdCat)</option>
+                    </select>
+                    <span asp-validation-for="IdCat" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Price"></label>
+                    <input type="number" asp-for="Price" class="account__login--input">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" class="account__login--input p-2"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div style="margin-top: -10px;">
+                    <label asp-for="City"></label>
+                    <input asp-for="City" class="account__login--input">
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <button class="account__login--btn primary__btn mb-10" type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -19,7 +19,7 @@ namespace OnlineClassifieds.DAL.Repository
 
         public async Task<IEnumerable<T>> GetAll(
             Expression<Func<T, bool>>? filter = null,
-            Func<IQueryable<T>, IOrderedEnumerable<T>>? orderBy = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
             string? includeProps = null,
             bool isTracking = false)
         {
@@ -30,7 +30,7 @@ namespace OnlineClassifieds.DAL.Repository
             }
             if (orderBy is not null)
             {
-                query = (IQueryable<T>)orderBy(query);
+                query = orderBy(query);
             }
             if (includeProps is not null)
             {
@@ -77,7 +77,7 @@ namespace OnlineClassifieds.DAL.Repository
             return await dbSet.FindAsync(id);
         }
 
-        public async Task Add(T entity)
+        virtual public async Task Add(T entity)
         {
             await dbSet.AddAsync(entity);
         }

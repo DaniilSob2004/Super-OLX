@@ -1,0 +1,24 @@
+﻿@model IEnumerable<OnlineClassifieds.Models.Announcement>
+@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> LocalizerMainTemp
+@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.PageResource> LocalizerPage
+
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            @if (Model.Count() > 0)
+            {
+                @foreach (var announ in Model)
+                {
+                    <partial name="_AnnouncementUserCart" model=@announ />
+                }
+            }
+            else
+            {
+                <h3 class="mb-4">@LocalizerPage["EmptyUserAnnoun_Text"]</h3>
+                <a asp-controller="Announcement" asp-action="Create" class="account__social--link google pointer border_transparent mb-5">
+                    @LocalizerMainTemp["AddAnnouncment_Menu"]
+                </a>
+            }
+        </div>
+    </div>
+</div>

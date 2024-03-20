@@ -2,20 +2,20 @@
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject CurrentUserProvider CurrentUserProvider
-@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
 
 @{
     var user = await CurrentUserProvider.GetCurrentUser();
-    string textUserHello = $"Hello {(user is null ? "" : user.FullName)}";
+    string textUserHello = $"{(user is null ? "" : $"{user.FullName}")}";
 }
 
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="header__shipping--text text-white">
-        <span>@textUserHello</span>
+        <span>@Localizer["HelloUser_Text"]@(textUserHello != "" ? ", " : "") @textUserHello</span>
     </li>
     <li class="header__shipping--text text-white">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Announcement", new { area = "" })">
             <button id="logout" type="submit" class="header__shipping--text text-white button-reset">@Localizer["Logout_Text"]</button>
         </form>
     </li>

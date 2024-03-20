@@ -6,7 +6,7 @@ namespace OnlineClassifieds.DAL.Repository.IRepository
     {
         Task<IEnumerable<T>> GetAll(
             Expression<Func<T, bool>>? filter = null,
-            Func<IQueryable<T>, IOrderedEnumerable<T>>? orderBy = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
             string? includeProps = null,
                         bool isTracking = false
         );

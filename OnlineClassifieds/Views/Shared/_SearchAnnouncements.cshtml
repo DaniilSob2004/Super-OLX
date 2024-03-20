@@ -1,0 +1,89 @@
+﻿@model int
+@inject ICookieService CookieService
+@inject ICategoryRepository CategoryRepository
+@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
+
+@{
+    var categories = await CategoryRepository.GetAll();  // все категории
+
+    // получаем id выбранной категории и поисковый текст
+    string searchTitle = CookieService.GetCookie(WC.CookieSearchTitleKey) ?? String.Empty;
+    string idChoiceCategory = CookieService.GetCookie(WC.CookieCategoryIdKey) ?? "-1";
+}
+
+
+<form id="searchForm_@Model" method="POST" class="d-flex header__search--form justify-content-center">
+    <div class="header__select--categories select">
+        <select id="idCat_@Model" class="header__select--inner">
+            <option value="-1">@Localizer["AllCategories_Text"]</option>
+            @foreach (var cat in categories)
+            {
+                if (cat.Id.ToString().Equals(idChoiceCategory))
+                {
+                    <option selected value="@cat.Id">@cat.Name</option>
+                }
+                else
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="header__search--box">
+        <label>
+            <input id="titleFilter_@Model" class="header__search--input" placeholder="@Localizer["SearchTitle_PH"]" type="text" value="@searchTitle">
+        </label>
+        <button class="header__search--button bg__secondary text-white" type="submit" aria-label="search button">
+            <svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg" width="27.51" height="26.443" viewBox="0 0 512 512"><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"></path></svg>
+        </button>
+    </div>
+</form>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    // при клике на выбранную категорию, отправляется AJAX-запрос, и возвращается PartialView
+    $(document).ready(function() {
+        $("#idCat_@Model").change(function() {
+            const idCat = $(this).val();
+            if (idCat && idCat !== undefined) {
+                $.ajax({
+                    url: "/Announcement/SearchByCategory",
+                    type: "POST",
+                    data: { idCat: idCat },
+                    success: (data) => {
+                        $("#titleFilter_@Model").val("");  // строку поиска очищаем
+                        $(".predictive__search--box").removeClass("active");  // убираем окно с поиском и категорией
+                        $("body").removeClass("predictive__search--box_active");  // убираем эффект от этого окна
+                        $("#trending").html(data);  // #trending находится в файле 'Announcement/Index'
+                    },
+                    error: (error) => {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+
+        // при клике на поиск, отправляется AJAX-запрос, и возвращается PartialView
+        $("#searchForm_@Model").submit(function(event) {
+            event.preventDefault();
+            const titleFilter = $("#titleFilter_@Model").val();
+            if (titleFilter && titleFilter !== undefined) {
+                $.ajax({
+                    url: "/Announcement/SearchByText",
+                    type: "POST",
+                    data: { _titleFilter: titleFilter },
+                    success: (data) => {
+                        $("#idCat_@Model option:first").prop("selected", true);  // выбираем меню 'все категории'
+                        $(".predictive__search--box").removeClass("active");  // убираем окно с поиском и категорией
+                        $("body").removeClass("predictive__search--box_active");  // убираем эффект от этого окна
+                        $("#trending").html(data);  // #trending находится в файле 'Announcement/Index'
+                    },
+                    error: (error) => {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+    });
+</script>

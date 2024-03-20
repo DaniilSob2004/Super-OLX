@@ -16,7 +16,8 @@ builder.Services.AddRazorPages();
 
 // add my services
 builder.Services.AddScoped<CurrentUserProvider>();
-builder.Services.AddSingleton<FilesWorkService>();
+builder.Services.AddScoped<FilesWorkService>();
+builder.Services.AddSingleton<ICookieService, CookieService>();
 
 
 //////////////// LOCALIZATION //////////////////////
@@ -97,6 +98,8 @@ builder.Services.AddAuthentication()
 
 //////////////////////// REPOSITORY ////////////////////////
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 ////////////////////////////////////////////////////////////
 
 
@@ -118,7 +121,7 @@ app.UseRequestLocalization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
+    pattern: "{controller=Announcement}/{action=Index}/{id?}"
 );
 
 app.Run();

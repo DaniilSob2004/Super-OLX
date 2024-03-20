@@ -1,4 +1,4 @@
-﻿@inject IViewLocalizer Localizer
+﻿@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
 
 <div class="header__bottom">
     <div class="container-fluid">
@@ -7,13 +7,13 @@
                 <nav class="header__menu--navigation">
                     <ul class="d-flex">
                         <li class="header__menu--items">
-                            <a class="header__menu--link" href="about.html">@Localizer["Home_Title"] </a>
+                            <a class="header__menu--link" asp-controller="Announcement" asp-action="Index">@Localizer["Home_Text"] </a>
                         </li>
                         <li class="header__menu--items">
-                            <a class="header__menu--link" href="about.html">@Localizer["AboutUs_Title"] </a>  
+                            <a class="header__menu--link" asp-controller="Home" asp-action="AboutUs">@Localizer["AboutUs_Text"] </a>  
                         </li>
                         <li class="header__menu--items d-none d-xl-block">
-                            <a class="header__menu--link" href="#">Categories 
+                            <a class="header__menu--link" href="#">@Localizer["Categories_Text"]  
                                 <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41" viewBox="0 0 12 7.41">
                                     <path  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
                                 </svg>
@@ -24,7 +24,7 @@
                             </ul>  
                         </li>
                         <li class="header__menu--items">
-                            <a class="header__menu--link" href="#">@Localizer["Pages_Title"] 
+                            <a class="header__menu--link" href="#">@Localizer["Pages_Text"] 
                                 <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41" viewBox="0 0 12 7.41">
                                     <path  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"/>
                                 </svg>
@@ -43,7 +43,7 @@
                 </nav>
             </div>
             <p class="header__discount--text"><img class="header__discount--icon__img" src="~/icon/lamp.png" alt="lamp-img">
-                @Localizer["Message_Info"]
+                @Localizer["Message_Header_Info"]
             </p>
         </div>
     </div>

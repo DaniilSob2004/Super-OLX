@@ -1,0 +1,33 @@
+﻿@model OnlineClassifieds.Models.Announcement
+@inject IAnnouncementRepository AnnouncementRepository
+@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
+
+@{ string imageName = AnnouncementRepository.GetImage(Model); }
+
+<div class="row p-2 bg-white border rounded pointer">
+    <div class="col-md-3 mt-1 d-flex justify-content-center">
+        <img src=@WC.ImageAnnouncementPath@imageName class="img-fluid img-responsive rounded product-image">
+    </div>
+    <div class="col-md-6 mt-1">
+        <h5 class="title_announcement">@Model.Title</h5>
+        <p class="text-justify text-truncate para mb-0">
+            @Model.CreateDt.ToLongDateString()<br/>
+            @Model.CreateDt.ToLongTimeString()
+        </p>
+        <p class="text-justify text-truncate para mb-0">
+            @Model.Category.Name
+        </p>
+        <p>
+            @Model.City
+        </p>
+    </div>
+    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+        <div class="d-flex flex-row align-items-center">
+            <h4 class="mr-1">₴@Model.Price</h4>
+        </div>
+        <div class="d-flex flex-column mt-4">
+            <a class="btn btn-primary btn-sm mt-2 middle_font_size">@Localizer["Edit_Text"]</a>
+            <a class="btn btn-danger btn-sm mt-2 middle_font_size">@Localizer["Delete_Text"]</a>
+        </div>
+    </div>
+</div>

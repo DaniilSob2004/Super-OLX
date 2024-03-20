@@ -19,7 +19,7 @@
         }
 
         // загружает картинку переданную из формы на сервер
-        public async Task<string> DownloadFileForm(string localPath, IFormFile newFile, string? oldFilename)
+        public async Task<string> DownloadFileForm(string localPath, IFormFile newFile, string? oldFilename = null)
         {
             string uploadDir = _webHostEnvironment.WebRootPath + localPath;  // директория, где хранятся изображения
             if (oldFilename is not null)

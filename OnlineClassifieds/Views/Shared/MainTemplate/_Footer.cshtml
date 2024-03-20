@@ -1,9 +1,9 @@
-﻿@inject IViewLocalizer Localizer
+﻿@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
 
 <div class="container-fluid">
     <div class="main__footer d-flex justify-content-between">
         <div class="footer__widget footer__widget--width">
-            <h2 class="footer__widget--title text-ofwhite h3">@Localizer["AboutUs_Title"]
+            <h2 class="footer__widget--title text-ofwhite h3">@Localizer["AboutUs_Text"]
                 <button class="footer__widget--button" aria-label="footer widget button">
                     <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
                         <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
@@ -12,12 +12,12 @@
             </h2>
             <div class="footer__widget--inner">
                 <p class="footer__widget--desc text-ofwhite mb-20">
-                    @Localizer["AboutUs_Text1"]<br />
-                    @Localizer["AboutUs_Text2"]<br />
-                    @Localizer["AboutUs_Text3"]<br />
+                    @Localizer["AboutUs_Text1_Footer"]<br />
+                    @Localizer["AboutUs_Text2_Footer"]<br />
+                    @Localizer["AboutUs_Text3_Footer"]<br />
                 </p>
                 <div class="footer__social">
-                    <h3 class="social__title text-ofwhite h4 mb-15">@Localizer["FollowUs_Title"]</h3>
+                    <h3 class="social__title text-ofwhite h4 mb-15">@Localizer["FollowUs_Text"]</h3>
                     <ul class="social__shear d-flex">
                         <li class="social__shear--list">
                             <a class="social__shear--list__icon" target="_blank" href="https://www.instagram.com/soboliev_daniil/">
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="footer__widget footer__widget--width">
-            <h2 class="footer__widget--title text-ofwhite h3">@Localizer["Newsletter_Title"] 
+            <h2 class="footer__widget--title text-ofwhite h3">@Localizer["Newsletter_Text"] 
                 <button class="footer__widget--button" aria-label="footer widget button">
                     <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
                         <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
@@ -49,7 +49,7 @@
                         <label>
                             <input class="newsletter__subscribe--input" placeholder="@Localizer["EmailAddress_PH"]" type="email">
                         </label>
-                        <button class="newsletter__subscribe--button" type="submit">@Localizer["Subscribe_Title"]</button>
+                        <button class="newsletter__subscribe--button" type="submit">@Localizer["Subscribe_Text"]</button>
                     </form>   
                 </div> 
             </div> 

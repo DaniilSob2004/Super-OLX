@@ -7,6 +7,7 @@ namespace OnlineClassifieds.DAL.Repository.IRepository
     public interface IAnnouncementRepository : IRepository<Announcement>
     {
         void Update(Announcement announcement);
+        string GetImage(Announcement announcement);
         SelectList? GetAllDropDownList(string obj);
     }
 }

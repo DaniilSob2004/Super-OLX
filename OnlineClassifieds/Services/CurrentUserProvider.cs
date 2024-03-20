@@ -19,15 +19,21 @@ namespace OnlineClassifieds.Services
             _userRepository = userRepository;
         }
 
-        public async Task<User?> GetCurrentUser()
+        public string? GetCurrentUserId()
         {
             ClaimsPrincipal? user = _httpContextAccessor?.HttpContext?.User;
             if (user is null) { return null; }
 
             Claim? userId = user.FindFirst(ClaimTypes.NameIdentifier);
+            return userId?.Value;
+        }
+
+        public async Task<User?> GetCurrentUser()
+        {
+            string? userId = GetCurrentUserId();
             if (userId is null) { return null; }
 
-            return await _userRepository.FirstOrDefault(u => u.Id.Equals(userId.Value));
+            return await _userRepository.FirstOrDefault(u => u.Id.Equals(userId));
         }
     }
 }

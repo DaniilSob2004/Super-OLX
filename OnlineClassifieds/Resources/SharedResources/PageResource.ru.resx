@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SearchAnnouncements_Text" xml:space="preserve">
-    <value>Search Announcements</value>
+  <data name="Announcements_Text" xml:space="preserve">
+    <value>Объявления</value>
   </data>
-  <data name="Search_Text" xml:space="preserve">
-    <value>Search...</value>
+  <data name="EmptyUserAnnoun_Text" xml:space="preserve">
+    <value>У вас нет объявлений...</value>
   </data>
 </root>
