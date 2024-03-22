@@ -10,9 +10,10 @@ namespace OnlineClassifieds.Models
         public string? IdSenderUser { get; set; }
         public string? IdReceiverUser { get; set; }
         public string Text { get; set; } = null!;
-        public Guid? IdAnnouncement { get; set; }
+        public Guid? IdChat { get; set; }
         public DateTime SendDt { get; set; }
         public DateTime? DeleteDt { get; set; }
+
 
         [ForeignKey("IdSenderUser")]
         public virtual User SenderUser { get; set; } = null!;
@@ -20,7 +21,7 @@ namespace OnlineClassifieds.Models
         [ForeignKey("IdReceiverUser")]
         public virtual User ReceiverUser { get; set; } = null!;
 
-        [ForeignKey("IdAnnouncement")]
-        public virtual Announcement Announcement { get; set; } = null!;
+        [ForeignKey("IdChat")]
+        public virtual Chat Chat { get; set; } = null!;
     }
 }

@@ -13,6 +13,12 @@ namespace OnlineClassifieds.DAL.Repository
             _db = db;
         }
 
+        public override async Task Add(Message entity)
+        {
+            entity.SendDt = DateTime.Now;
+            await base.Add(entity);
+        }
+
         public override async Task Remove(Message entity)
         {
             entity.DeleteDt = DateTime.Now;

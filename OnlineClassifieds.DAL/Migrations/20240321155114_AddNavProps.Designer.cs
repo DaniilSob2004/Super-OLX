@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineClassifieds.DAL.Data;
 
@@ -11,9 +12,10 @@ using OnlineClassifieds.DAL.Data;
 namespace OnlineClassifieds.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240321155114_AddNavProps")]
+    partial class AddNavProps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,19 +304,9 @@ namespace OnlineClassifieds.DAL.Migrations
                     b.Property<Guid?>("IdAnnouncement")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("IdBuyer")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IdOwner")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IdAnnouncement");
-
-                    b.HasIndex("IdBuyer");
-
-                    b.HasIndex("IdOwner");
 
                     b.ToTable("Chat");
                 });
@@ -444,19 +436,7 @@ namespace OnlineClassifieds.DAL.Migrations
                         .WithMany("Chats")
                         .HasForeignKey("IdAnnouncement");
 
-                    b.HasOne("OnlineClassifieds.Models.User", "UserBuyer")
-                        .WithMany()
-                        .HasForeignKey("IdBuyer");
-
-                    b.HasOne("OnlineClassifieds.Models.User", "UserOwner")
-                        .WithMany()
-                        .HasForeignKey("IdOwner");
-
                     b.Navigation("Announcement");
-
-                    b.Navigation("UserBuyer");
-
-                    b.Navigation("UserOwner");
                 });
 
             modelBuilder.Entity("OnlineClassifieds.Models.Message", b =>

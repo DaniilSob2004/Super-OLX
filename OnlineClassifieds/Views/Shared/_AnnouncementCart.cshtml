@@ -1,8 +1,12 @@
 ﻿@model OnlineClassifieds.Models.Announcement
 @inject IAnnouncementRepository AnnouncementRepository
+@inject CurrentUserProvider CurrentUserProvider
 @inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
 
-@{ string imageName = AnnouncementRepository.GetImage(Model); }
+@{
+    string imageName = AnnouncementRepository.GetImage(Model);
+    string currUserId = CurrentUserProvider.GetCurrentUserId() ?? String.Empty;
+}
 
 <div class="col mb-30">
     <div class="product__items ">
@@ -21,18 +25,27 @@
             </div>
             <span>@Model.City</span>
             <ul class="product__items--action d-flex">
-                <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="cart.html">
-                        <img src="~/icon/message.png" class="small_message_icon">
-                        <span class="add__to--cart__text"> @Localizer["Message_Text"]</span>
-                    </a>
-                </li>
-                <li class="product__items--action__list">
-                    <a class="product__items--action__btn" href="wishlist.html">
-                        <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path></svg> 
-                        <span class="visually-hidden">Wishlist</span>
-                    </a>
-                </li>
+                @if (Model.IdUser!.Equals(currUserId))  // если это моё объявление, то выводим текст
+                {
+                    <li class="product__items--action__list">
+                        <span class="item_alert_text default_cursor">@Localizer["MyAnnouncment_Text"]</span>
+                    </li>
+                }
+                else
+                {
+                    <li class="product__items--action__list">
+                        <a asp-controller="Message" asp-action="OpenChat" asp-route-idAnnouncement=@Model.Id class="product__items--action__btn add__to--cart">
+                            <img src="~/icon/message.png" class="small_message_icon">
+                            <span class="add__to--cart__text"> @Localizer["Message_Text"]</span>
+                        </a>
+                    </li>
+                    <li class="product__items--action__list">
+                        <a class="product__items--action__btn" href="wishlist.html">
+                            <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path></svg> 
+                            <span class="visually-hidden">Wishlist</span>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
     </div>

@@ -1,0 +1,48 @@
+﻿@model OnlineClassifieds.Models.Message
+@inject CurrentUserProvider CurrentUserProvider
+
+@{
+    string currUserId = CurrentUserProvider.GetCurrentUserId() ?? String.Empty;
+
+    // если текущий пользователь отправитель в сообщении, то будет true, иначе false
+    // чтобы понять с какой стороны отображать сообщение в чате
+    bool isMyMessage = currUserId.Equals(Model.IdSenderUser);
+}
+
+<li class="clearfix">
+    <div class="message-data @(isMyMessage ? "" : "text-right")">
+        <span class="message-data-time">
+            @Model.SendDt.ToShortDateString() (@Model.SendDt.ToShortTimeString())
+        </span>
+    </div>
+    <div class="message @(isMyMessage ? "my-message" : "other-message float-right")">
+        @Model.Text
+    </div>                                    
+</li>
+
+
+@*
+Сообщение собеседника
+<li class="clearfix">
+    <div class="message-data text-right">
+        <span class="message-data-time">
+            10:10 AM, Today
+        </span>
+    </div>
+    <div class="message other-message float-right">
+        Are we meeting today?
+    </div>
+</li>*@
+
+@*
+Моё сообщение
+<li class="clearfix">
+    <div class="message-data">  // text-right
+        <span class="message-data-time">
+            10:12 AM, Today
+        </span>
+    </div>
+    <div class="message my-message">  // other-message float-right
+        Are we meeting today?
+    </div>                                    
+</li>*@

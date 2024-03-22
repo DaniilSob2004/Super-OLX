@@ -31,7 +31,20 @@
 .pointer {
     cursor: pointer;
 }
+.default_cursor {
+    cursor: default;
+}
 
 .title_announcement:hover {
+    color: var(--secondary-color);
+}
+
+.item_alert_text {
+    border: 1px solid var(--border-color);
+    height: 4.4rem;
+    line-height: 4rem;
+    padding: 0 0.6rem;
+    color: var(--text-gray-color);
+    border-radius: 0.3rem;
     color: var(--secondary-color);
 }

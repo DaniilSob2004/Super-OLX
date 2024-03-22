@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineClassifieds.DAL.Data;
 
@@ -11,9 +12,10 @@ using OnlineClassifieds.DAL.Data;
 namespace OnlineClassifieds.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240321150304_AddChat_ChangeMessage")]
+    partial class AddChat_ChangeMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,19 +304,9 @@ namespace OnlineClassifieds.DAL.Migrations
                     b.Property<Guid?>("IdAnnouncement")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("IdBuyer")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IdOwner")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IdAnnouncement");
-
-                    b.HasIndex("IdBuyer");
-
-                    b.HasIndex("IdOwner");
 
                     b.ToTable("Chat");
                 });
@@ -430,7 +422,7 @@ namespace OnlineClassifieds.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("OnlineClassifieds.Models.User", "User")
-                        .WithMany("Announcements")
+                        .WithMany()
                         .HasForeignKey("IdUser");
 
                     b.Navigation("Category");
@@ -441,36 +433,24 @@ namespace OnlineClassifieds.DAL.Migrations
             modelBuilder.Entity("OnlineClassifieds.Models.Chat", b =>
                 {
                     b.HasOne("OnlineClassifieds.Models.Announcement", "Announcement")
-                        .WithMany("Chats")
+                        .WithMany()
                         .HasForeignKey("IdAnnouncement");
 
-                    b.HasOne("OnlineClassifieds.Models.User", "UserBuyer")
-                        .WithMany()
-                        .HasForeignKey("IdBuyer");
-
-                    b.HasOne("OnlineClassifieds.Models.User", "UserOwner")
-                        .WithMany()
-                        .HasForeignKey("IdOwner");
-
                     b.Navigation("Announcement");
-
-                    b.Navigation("UserBuyer");
-
-                    b.Navigation("UserOwner");
                 });
 
             modelBuilder.Entity("OnlineClassifieds.Models.Message", b =>
                 {
                     b.HasOne("OnlineClassifieds.Models.Chat", "Chat")
-                        .WithMany("Messages")
+                        .WithMany()
                         .HasForeignKey("IdChat");
 
                     b.HasOne("OnlineClassifieds.Models.User", "ReceiverUser")
-                        .WithMany("ReceivedMessages")
+                        .WithMany()
                         .HasForeignKey("IdReceiverUser");
 
                     b.HasOne("OnlineClassifieds.Models.User", "SenderUser")
-                        .WithMany("SentMessages")
+                        .WithMany()
                         .HasForeignKey("IdSenderUser");
 
                     b.Navigation("Chat");
@@ -478,25 +458,6 @@ namespace OnlineClassifieds.DAL.Migrations
                     b.Navigation("ReceiverUser");
 
                     b.Navigation("SenderUser");
-                });
-
-            modelBuilder.Entity("OnlineClassifieds.Models.Announcement", b =>
-                {
-                    b.Navigation("Chats");
-                });
-
-            modelBuilder.Entity("OnlineClassifieds.Models.Chat", b =>
-                {
-                    b.Navigation("Messages");
-                });
-
-            modelBuilder.Entity("OnlineClassifieds.Models.User", b =>
-                {
-                    b.Navigation("Announcements");
-
-                    b.Navigation("ReceivedMessages");
-
-                    b.Navigation("SentMessages");
                 });
 #pragma warning restore 612, 618
         }

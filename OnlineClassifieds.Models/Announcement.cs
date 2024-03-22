@@ -38,10 +38,14 @@ namespace OnlineClassifieds.Models
         public DateTime CreateDt { get; set; }
         public DateTime? DeleteDt { get; set; }
 
+
         [ForeignKey("IdCat")]
         public virtual Category Category { get; set; } = null!;
 
         [ForeignKey("IdUser")]
         public virtual User User { get; set; } = null!;
+
+        [InverseProperty("Announcement")]
+        public ICollection<Chat> Chats { get; set; } = null!;
     }
 }

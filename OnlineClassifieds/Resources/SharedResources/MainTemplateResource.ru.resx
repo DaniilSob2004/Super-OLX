@@ -166,6 +166,9 @@
   <data name="Logout_Text" xml:space="preserve">
     <value>Выйти</value>
   </data>
+  <data name="Messages_Menu" xml:space="preserve">
+    <value>Сообщения</value>
+  </data>
   <data name="Message_Header_Info" xml:space="preserve">
     <value>Все объявления проверены</value>
   </data>
@@ -177,6 +180,9 @@
   </data>
   <data name="MyAnnouncment_Menu" xml:space="preserve">
     <value>Мои объявления</value>
+  </data>
+  <data name="MyAnnouncment_Text" xml:space="preserve">
+    <value>Моё объявление</value>
   </data>
   <data name="Newsletter_Text" xml:space="preserve">
     <value>Новостная рассылка</value>
