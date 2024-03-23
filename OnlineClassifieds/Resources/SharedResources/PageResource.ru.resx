@@ -123,4 +123,40 @@
   <data name="EmptyUserAnnoun_Text" xml:space="preserve">
     <value>У вас нет объявлений...</value>
   </data>
+  <data name="OurMission_Text" xml:space="preserve">
+    <value>Наша миссия в Online Classifieds — предоставить удобную платформу для частных и юридических лиц для размещения объявлений о покупке и продаже товаров и услуг. Мы стремимся сделать этот процесс максимально простым и беспроблемным для наших пользователей.</value>
+  </data>
+  <data name="OurMission_Title" xml:space="preserve">
+    <value>Наша Цель</value>
+  </data>
+  <data name="OurTeam_Title" xml:space="preserve">
+    <value>Наша Команда</value>
+  </data>
+  <data name="WhoWeAre_Text" xml:space="preserve">
+    <value>Добро пожаловать в Online Classifieds, ваш источник номер один по всем вопросам, связанным с покупкой и продажей. Мы стремимся предоставить вам самое лучшее из тематических рекламных объявлений, уделяя особое внимание пользовательскому опыту, надежности и достоверности.</value>
+  </data>
+  <data name="WhoWeAre_Title" xml:space="preserve">
+    <value>Кто Мы?</value>
+  </data>
+  <data name="WhyChooseUs_List1" xml:space="preserve">
+    <value>Простая в использовании платформа</value>
+  </data>
+  <data name="WhyChooseUs_List2" xml:space="preserve">
+    <value>Широкий выбор категорий</value>
+  </data>
+  <data name="WhyChooseUs_List3" xml:space="preserve">
+    <value>Безопасные транзакции</value>
+  </data>
+  <data name="WhyChooseUs_List4" xml:space="preserve">
+    <value>Выделенная поддержка клиентов</value>
+  </data>
+  <data name="WhyChooseUs_List5" xml:space="preserve">
+    <value>И многое другое..</value>
+  </data>
+  <data name="WhyChooseUs_Text" xml:space="preserve">
+    <value>Есть много причин выбрать Online Classifieds для покупок и продаж:</value>
+  </data>
+  <data name="WhyChooseUs_Title" xml:space="preserve">
+    <value>Почему выбирают нас?</value>
+  </data>
 </root>

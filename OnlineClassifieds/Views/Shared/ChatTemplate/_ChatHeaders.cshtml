@@ -1,0 +1,36 @@
+﻿@model OnlineClassifieds.ViewModels.UserChatVM
+@inject IUserRepository UserRepository
+
+@{ string userName = "", avatarName = ""; }
+
+@foreach (var chat in Model.Chats)
+{
+    // если текущий пользователь это покупатель в текущем чате
+    userName = chat.IdBuyer!.Equals(Model.CurrUserId) ?
+        (chat.UserOwner.FullName ?? "User") :
+        (chat.UserBuyer.FullName ?? "User");
+
+    avatarName = chat.IdBuyer!.Equals(Model.CurrUserId) ?
+        UserRepository.GetAvatar(chat.UserOwner) :
+        UserRepository.GetAvatar(chat.UserBuyer);
+
+    // (если текущий чат активен)
+    <li id="chatHeader" data-idChat=@chat.Id class="clearfix @(Model.ActiveChat?.Id == chat.Id ? "active" : "")">
+        <img src=@WC.ImageUserPath@avatarName alt="ava">
+        <div class="about">
+            <div class="name">@chat.Announcement.Title</div>
+            <div class="status"> <i class="fa fa-circle offline"></i> @userName</div>                                            
+        </div>
+    </li>
+}
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#chatHeader").click(function() {
+            const chatId = $(this).attr("data-idChat");
+            console.log(chatId);
+        });
+    });
+</script>

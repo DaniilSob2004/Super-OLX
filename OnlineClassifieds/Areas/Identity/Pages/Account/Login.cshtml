@@ -4,43 +4,45 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="row">
-    <div class="account__login">
-        <div class="account__login--header mb-25">
-            <h2 class="account__login--header__title h3 mb-10">Login</h2>
-            <p class="account__login--header__desc">Login if you area a returning customer.</p>
-        </div>
-        <div class="account__login--inner">
-            <form id="account" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div>
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="account__login--input">
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="account__login--input">
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="account__login--remember__forgot mb-15 d-flex justify-content-between align-items-center">
-                    <div class="account__login--remember position__relative">
-                        <div class="checkbox">
-                            <label asp-for="Input.RememberMe" class="form-label">
-                                <input class="form-check-input" asp-for="Input.RememberMe" />
-                                @Html.DisplayNameFor(m => m.Input.RememberMe)
-                            </label>
-                        </div>
-                    </div>
-                    <button class="account__login--forgot" type="submit">Forgot Your Password?</button>
-                </div>
-                <button class="account__login--btn primary__btn mb-10" type="submit">Login</button>
-            </form>
-            <div class="account__login--divide">
-                <span class="account__login--divide__text">OR</span>
+<div class="row justify-content-center">
+    <div class="col-xl-6">
+        <div class="account__login">
+            <div class="account__login--header mb-25">
+                <h2 class="account__login--header__title h3 mb-10">Login</h2>
+                <p class="account__login--header__desc">Login if you area a returning customer.</p>
             </div>
-            <partial name="_ExternalLoginsBtns" model="@Model" />  <!-- Show external logins buttons -->
+            <div class="account__login--inner">
+                <form id="account" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div>
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="account__login--input">
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="account__login--input">
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="account__login--remember__forgot mb-15 d-flex justify-content-between align-items-center">
+                        <div class="account__login--remember position__relative">
+                            <div class="checkbox">
+                                <label asp-for="Input.RememberMe" class="form-label">
+                                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                        <button class="account__login--forgot" type="submit">Forgot Your Password?</button>
+                    </div>
+                    <button class="account__login--btn primary__btn mb-10" type="submit">Login</button>
+                </form>
+                <div class="account__login--divide">
+                    <span class="account__login--divide__text">OR</span>
+                </div>
+                <partial name="_ExternalLoginsBtns" model="@Model" />  <!-- Show external logins buttons -->
+            </div>
         </div>
     </div>
 </div>

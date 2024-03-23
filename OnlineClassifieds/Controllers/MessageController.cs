@@ -61,6 +61,7 @@ namespace OnlineClassifieds.Controllers
             return View(userChatVM);
         }
 
+        [HttpPost]
         public async Task<IActionResult> OpenChat(string idAnnouncement)
         {
             if (!Guid.TryParse(idAnnouncement, out Guid announIdGuid)) { return NotFound(); }

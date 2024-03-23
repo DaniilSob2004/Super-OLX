@@ -1,9 +1,7 @@
 ﻿@model OnlineClassifieds.ViewModels.UserChatVM
 @inject IUserRepository UserRepository
 
-@{
-    string userName = "", avatarName = "";
-}
+@{ string userName = "", avatarName = ""; }
 
 <div class="container">
     <div class="row clearfix">
@@ -17,33 +15,7 @@
                         <input type="text" class="form-control" placeholder="Search...">
                     </div>
                     <ul class="list-unstyled chat-list mt-2 mb-0">
-                        @*<li class="clearfix active">
-                            <img src="" alt="avatar">
-                            <div class="about">
-                                <div class="name">Vincent Porter</div>
-                                <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>                                            
-                            </div>
-                        </li>*@
-                        @foreach (var chat in Model.Chats)
-                        {
-                            // если текущий пользователь это покупатель в текущем чате
-                            userName = chat.IdBuyer!.Equals(Model.CurrUserId) ?
-                                (chat.UserOwner.FullName ?? "User") :
-                                (chat.UserBuyer.FullName ?? "User");
-
-                            avatarName = chat.IdBuyer!.Equals(Model.CurrUserId) ?
-                                UserRepository.GetAvatar(chat.UserOwner) :
-                                UserRepository.GetAvatar(chat.UserBuyer);
-                            
-                            // (если текущий сайт активен)
-                            <li class="clearfix @(Model.ActiveChat?.Id == chat.Id ? "active" : "")">
-                                <img src=@WC.ImageUserPath@avatarName alt="ava">
-                                <div class="about">
-                                    <div class="name">@chat.Announcement.Title</div>
-                                    <div class="status"> <i class="fa fa-circle offline"></i> @userName</div>                                            
-                                </div>
-                            </li>
-                        }
+                        <partial name="ChatTemplate/_ChatHeaders" model=@Model />  <!-- доступные чаты -->
                     </ul>
                 </div>
                 <div class="chat">
@@ -73,7 +45,13 @@
                     </div>
                     <div class="chat-history">
                         <ul id="chatHistory" class="m-b-0">
-                            
+                            @if (Model.ActiveChat is not null)
+                            {
+                                @foreach (var mess in Model.ActiveChat.Messages)
+                                {
+                                    <partial name="ChatTemplate/_Message" model=@mess />  <!-- сообщение -->
+                                }
+                            }
                         </ul>
                     </div>
                     <div class="chat-message clearfix">

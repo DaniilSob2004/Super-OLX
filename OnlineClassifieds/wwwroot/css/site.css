@@ -11,7 +11,10 @@
     font-size: 1.35rem;
 }
 
-.user_avatar, .small_user_avatar, .big_user_avatar {
+.user_avatar,
+.small_user_avatar,
+.big_user_avatar,
+.team_user_avatar {
     object-fit: cover;
     border-radius: 50%;
 }
@@ -26,6 +29,10 @@
 .small_message_icon {
     width: 24px;
     height: 24px;
+}
+.team_user_avatar {
+    width: 200px;
+    height: 200px;
 }
 
 .pointer {

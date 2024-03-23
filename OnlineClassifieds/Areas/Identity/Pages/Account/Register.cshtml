@@ -4,44 +4,46 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="row">
-    <div class="account__login register">
-        <div class="account__login--header mb-25">
-            <h2 class="account__login--header__title h3 mb-10">Create an Account</h2>
-            <p class="account__login--header__desc">Register here if you are a new customer</p>
-        </div>
-        <div class="account__login--inner">
-            <form method="POST" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" enctype="multipart/form-data">
-                <div>
-                    <label asp-for="Input.FullName"></label>
-                    <input asp-for="Input.FullName" class="account__login--input">
-                    <span asp-validation-for="Input.FullName" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="account__login--input" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="account__login--input" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="Input.ConfirmPassword"></label>
-                    <input asp-for="Input.ConfirmPassword" class="account__login--input" />
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                </div>
-                <div class="mb-4">
-                    <label asp-for="Input.Avatar" class="form-label">@Html.DisplayNameFor(model => model.Input.Avatar)</label>
-                    <input type="file" name="files" id="uploadBox" class="form-control form-control-lg">
-                </div>
-                <button class="account__login--btn primary__btn mb-10" type="submit">Register</button>
-            </form>
-            <div class="account__login--divide">
-                <span class="account__login--divide__text">OR</span>
+<div class="row justify-content-center">
+    <div class="col-xl-6">
+        <div class="account__login register">
+            <div class="account__login--header mb-25">
+                <h2 class="account__login--header__title h3 mb-10">Create an Account</h2>
+                <p class="account__login--header__desc">Register here if you are a new customer</p>
             </div>
-            <partial name="_ExternalLoginsBtns" model="@Model" />  <!-- Show external logins buttons -->
+            <div class="account__login--inner">
+                <form method="POST" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" enctype="multipart/form-data">
+                    <div>
+                        <label asp-for="Input.FullName"></label>
+                        <input asp-for="Input.FullName" class="account__login--input">
+                        <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="account__login--input" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="account__login--input" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Input.ConfirmPassword"></label>
+                        <input asp-for="Input.ConfirmPassword" class="account__login--input" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="Input.Avatar" class="form-label">@Html.DisplayNameFor(model => model.Input.Avatar)</label>
+                        <input type="file" name="files" id="uploadBox" class="form-control form-control-lg">
+                    </div>
+                    <button class="account__login--btn primary__btn mb-10" type="submit">Register</button>
+                </form>
+                <div class="account__login--divide">
+                    <span class="account__login--divide__text">OR</span>
+                </div>
+                <partial name="_ExternalLoginsBtns" model="@Model" />  <!-- Show external logins buttons -->
+            </div>
         </div>
     </div>
 </div>
