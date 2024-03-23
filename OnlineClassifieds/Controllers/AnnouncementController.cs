@@ -12,7 +12,7 @@ namespace OnlineClassifieds.Controllers
 {
     public class AnnouncementController : Controller
     {
-        private const int PageSize = 4;
+        private const int PageSize = 5;
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly FilesWorkService _filesWorkService;
         private readonly CurrentUserProvider _currentUserProvider;

@@ -1,0 +1,48 @@
+﻿@model OnlineClassifieds.Models.Chat
+@inject IUserRepository UserRepository
+@inject CurrentUserProvider CurrentUserProvider
+
+@{
+    string currUserId = CurrentUserProvider.GetCurrentUserId() ?? String.Empty;
+    string userName = "", avatarName = "";
+
+    if (Model is not null)
+    {
+        // если текущий пользователь это покупатель в текущем чате
+        userName = Model.IdBuyer!.Equals(currUserId) ?
+            (Model.UserOwner.FullName ?? "User") :
+            (Model.UserBuyer.FullName ?? "User");
+
+        avatarName = Model.IdBuyer!.Equals(currUserId) ?
+            UserRepository.GetAvatar(Model.UserOwner) :
+            UserRepository.GetAvatar(Model.UserBuyer);
+    }
+}
+
+<div class="chat-header clearfix">
+    <div class="row">
+        <div class="col-lg-6 user-info">
+            <i data-toggle="modal" data-target="#view_info">
+                <img src=@WC.ImageUserPath@avatarName alt="ava">
+            </i>
+            <div class="chat-about">
+                <h6 class="m-b-0">@Model?.Announcement.Title</h6>
+                <span>(@userName)</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="chat-history">
+    <ul id="chatHistory" class="mb-0">
+        @if (Model is not null)
+        {
+            @foreach (var mess in Model.Messages)
+            {
+                <partial name="ChatTemplate/_Message" model=@mess />  <!-- сообщение -->
+            }
+        }
+    </ul>
+</div>
+<div class="chat-message clearfix">
+    <partial name="ChatTemplate/_InputMessage" model=@Model?.Id />  <!-- отправка сообщения -->
+</div>

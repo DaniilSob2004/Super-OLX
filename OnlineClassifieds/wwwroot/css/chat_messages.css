@@ -40,7 +40,7 @@ body {
 }
 
 .people-list .chat-list {
-    max-height: 465px;
+    max-height: 450px;
     overflow-x: auto;
 }
 
@@ -102,8 +102,8 @@ body {
 
 .chat-history {
     min-height: 200px;
-    max-height: 550px;
-    overflow-x: auto;
+    max-height: 500px;
+    overflow: auto;
 }
 .chat .chat-history {
     padding: 20px;

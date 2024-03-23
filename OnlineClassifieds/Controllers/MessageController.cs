@@ -61,7 +61,6 @@ namespace OnlineClassifieds.Controllers
             return View(userChatVM);
         }
 
-        [HttpPost]
         public async Task<IActionResult> OpenChat(string idAnnouncement)
         {
             if (!Guid.TryParse(idAnnouncement, out Guid announIdGuid)) { return NotFound(); }
@@ -91,7 +90,7 @@ namespace OnlineClassifieds.Controllers
                 return RedirectToAction(nameof(Index), new { activeChatId = newChat.Id });
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { activeChatId = chat.Id });
         }
 
         [HttpPost]
@@ -120,6 +119,20 @@ namespace OnlineClassifieds.Controllers
             await _messageRepository.Save();
 
             return PartialView("ChatTemplate/_Message", mess);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SwitchChat(string chatId)
+        {
+            if (!Guid.TryParse(chatId, out Guid chatGuid)) { return NotFound(); }
+
+            Chat? chat = await _chatRepository.FirstOrDefault(
+                c => c.Id == chatGuid,
+                includeProps: "Announcement,Messages,UserOwner,UserBuyer"
+            );
+            if (chat is null) { return NotFound(); }
+
+            return PartialView("ChatTemplate/_ChatContent", chat);
         }
     }
 }

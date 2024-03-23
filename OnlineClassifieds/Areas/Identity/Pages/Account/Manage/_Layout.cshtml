@@ -9,13 +9,15 @@
     }
 }
 
-<div class="my__account--section__inner border-radius-10 d-flex mt-4">
-    <div class="account__left--sidebar">
-        <h2 class="account__content--title h3 mb-20">Manage your account</h2>
-        <partial name="_ManageNav" />
-    </div>
-    <div class="account__wrapper">
-        @RenderBody()
+<div class="row justify-content-center">
+    <div class="my__account--section__inner border-radius-10 d-flex mt-4 col-xl-6">
+        <div class="account__left--sidebar">
+            <h2 class="account__content--title h3 mb-20">Manage your account</h2>
+            <partial name="_ManageNav" />
+        </div>
+        <div class="account__wrapper">
+            @RenderBody()
+        </div>
     </div>
 </div>
 
