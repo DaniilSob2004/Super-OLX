@@ -4,15 +4,19 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
+using OnlineClassifieds.Services;
+using OnlineClassifieds.Hubs;
+
 using OnlineClassifieds.DAL.Data;
 using OnlineClassifieds.DAL.Repository.IRepository;
 using OnlineClassifieds.DAL.Repository;
-using OnlineClassifieds.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // add services to the container
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
 // add my services
 builder.Services.AddScoped<CurrentUserProvider>();
@@ -120,6 +124,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseRequestLocalization();
+
+app.MapHub<MessageHub>("/messagehub");
 
 app.MapControllerRoute(
     name: "default",

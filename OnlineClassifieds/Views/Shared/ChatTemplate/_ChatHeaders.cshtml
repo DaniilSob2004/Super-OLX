@@ -4,16 +4,16 @@
 @{ string userName = "", avatarName = ""; }
 
 <ul class="list-unstyled chat-list mt-2 mb-0">
-@foreach (var chat in Model.Chats)
-{
-    // если текущий пользователь это покупатель в текущем чате
-    userName = chat.IdBuyer!.Equals(Model.CurrUserId) ?
-        (chat.UserOwner.FullName ?? "User") :
-        (chat.UserBuyer.FullName ?? "User");
+    @foreach (var chat in Model.Chats)
+    {
+        // если текущий пользователь это покупатель в текущем чате
+        userName = chat.IdBuyer!.Equals(Model.CurrUserId) ?
+            (chat.UserOwner.FullName ?? "User") :
+            (chat.UserBuyer.FullName ?? "User");
 
-    avatarName = chat.IdBuyer!.Equals(Model.CurrUserId) ?
-        UserRepository.GetAvatar(chat.UserOwner) :
-        UserRepository.GetAvatar(chat.UserBuyer);
+        avatarName = chat.IdBuyer!.Equals(Model.CurrUserId) ?
+            UserRepository.GetAvatar(chat.UserOwner) :
+            UserRepository.GetAvatar(chat.UserBuyer);
 
         @* (если текущий чат активен) *@
         <li data-idChat=@chat.Id class="chatHeader clearfix @(Model.ActiveChat?.Id == chat.Id ? "active" : "")">
@@ -23,23 +23,35 @@
                 <div class="status"> <i class="fa fa-circle offline"></i> @userName</div>                                            
             </div>
         </li>
-}
+    }
 </ul>
 
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
+        // записываем в куки активный чат пользователя
+        setChatIdToCookie(@Html.Raw(Json.Serialize(Model.ActiveChat?.Id.ToString())));
+
+        // при клике на чат, отправляется AJAX-запрос, и возвращается PartialView с контентом
         $(".chatHeader").click(function() {
+            settingsHeightListChat();  // регулируем высоту списка чатов
+
             const chatIdModel = $(this).attr("data-idChat");
+            setChatIdToCookie(chatIdModel);  // записываем в куки активный чат пользователя
+
             $.ajax({
                 url: "/Message/SwitchChat",
                 type: "POST",
                 data: { chatId: chatIdModel },
                 success: (data) => {
                     $("#chatContent").html(data);
+
+                    // меняем активный чат
                     $(".chatHeader.active").removeClass("active");
                     $(this).addClass("active");
+
+                    settingsHeightListChat();  // регулируем высоту списка чатов
                 },
                 error: (error) => {
                     console.error(error);

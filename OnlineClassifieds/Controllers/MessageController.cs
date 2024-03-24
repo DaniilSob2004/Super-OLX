@@ -134,5 +134,25 @@ namespace OnlineClassifieds.Controllers
 
             return PartialView("ChatTemplate/_ChatContent", chat);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ShowNewMessage(string message, string sendUserId, string chatId)
+        {
+            if (!Guid.TryParse(chatId, out Guid chatGuid)) { return NotFound(); }
+
+            Chat? chat = await _chatRepository.FirstOrDefault(
+                c => c.Id == chatGuid,
+                includeProps: "Messages"
+            );
+            if (chat is null) { return NotFound(); }
+
+            // находим последнее смс в чате 'chatId' отправленное пользователем 'sendUserId' и текстом 'message'
+            Message? lastMessage = chat.Messages
+                .Where(m => m.IdSenderUser!.Equals(sendUserId) && m.Text.Equals(message))
+                .OrderByDescending(m => m.SendDt)
+                .FirstOrDefault();
+
+            return PartialView("ChatTemplate/_Message", lastMessage);
+        }
     }
 }

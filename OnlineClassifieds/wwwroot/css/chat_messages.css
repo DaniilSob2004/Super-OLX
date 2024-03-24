@@ -19,7 +19,7 @@ body {
 }
 
 .chat-app .people-list {
-    width: 280px;
+    width: 295px;
     position: absolute;
     left: 0;
     top: 0;
@@ -40,8 +40,8 @@ body {
 }
 
 .people-list .chat-list {
-    max-height: 450px;
-    overflow-x: auto;
+    max-height: 300px;
+    overflow: auto;
 }
 
 .people-list .chat-list li {

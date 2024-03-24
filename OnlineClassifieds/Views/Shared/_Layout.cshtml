@@ -41,11 +41,9 @@
         <partial name="MainTemplate/_DropDownSearchField" />
     </header>
 
-    @*<div class="container">*@
-        <main class="main__content_wrapper m-5">
-            @RenderBody()
-        </main>
-    @*</div>*@
+    <main class="main__content_wrapper m-5">
+        @RenderBody()
+    </main>
 
     <footer class="footer__section bg__black footer__section">
         <partial name="MainTemplate/_Footer" />
@@ -57,6 +55,9 @@
             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M112 244l144-144 144 144M256 120v292"/>
         </svg>
     </button>
+
+    <!-- SignalR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

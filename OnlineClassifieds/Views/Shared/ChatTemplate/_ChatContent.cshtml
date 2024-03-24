@@ -44,5 +44,53 @@
     </ul>
 </div>
 <div class="chat-message clearfix">
-    <partial name="ChatTemplate/_InputMessage" model=@Model?.Id />  <!-- отправка сообщения -->
+    <div class="input-group mb-0">
+        <div class="input-group-prepend">
+            <span id="sendBtn" class="input-group-text sendBtn">
+                <i class="fa fa-send"></i>
+            </span>
+        </div>
+        <input id="message" type="text" class="form-control" placeholder="Enter text here...">                          
+    </div>
 </div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        settingsHeightListChat();  // регулируем высоту списка чатов
+
+        // при клике на кнопку, отправляется AJAX-запрос, и возвращается PartialView сообщения
+        $(".sendBtn").click(function() {
+            const messageText = $("#message").val();
+            const chatIdModel = "@Model?.Id";
+            $.ajax({
+                url: "/Message/SendMessage",
+                type: "POST",
+                data: { message: messageText, chatId: chatIdModel },
+                success: (data) => {
+                    $("#chatHistory").append(data);  // добавляем сообщение в чат пользователя
+                    $("#message").val("");  // очищаем текстовое поле для ввода
+
+                    sendMessageToChat(chatIdModel, messageText);  // отправка сообщения на hub
+                    settingsHeightListChat();  // регулируем высоту списка чатов
+                },
+                error: (error) => {
+                    console.error(error);
+                }
+            });
+        });
+
+        // отправка сообщение на сервер, для отправки пользователю
+        function sendMessageToChat(chatId, message) {
+            const senderUserId = @Html.Raw(Json.Serialize(currUserId.ToString()));
+            window.chatConnection.invoke("SendMessage", chatId, senderUserId, message)
+                .then(() => {
+                    console.log("Message sent successfully!");
+                })
+                .catch((err) => {
+                    console.error("Error sending message: " + err.message);
+                });
+        }
+    });
+</script>
