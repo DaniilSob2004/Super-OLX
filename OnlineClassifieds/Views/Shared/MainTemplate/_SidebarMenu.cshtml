@@ -13,7 +13,7 @@
                 <li class="offcanvas__menu_li">
                     <a class="offcanvas__menu_item" asp-controller="Announcement" asp-action="Index">@Localizer["Home_Text"]</a>
                 </li>
-                <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">@Localizer["AboutUs_Text"]</a></li>
+                <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" asp-controller="Home" asp-action="AboutUs">@Localizer["AboutUs_Text"]</a></li>
                 <li class="offcanvas__menu_li">
                     <a class="offcanvas__menu_item" href="#">@Localizer["Pages_Text"]</a>
                     <ul class="offcanvas__sub_menu">

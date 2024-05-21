@@ -10,12 +10,10 @@
     {
         // если текущий пользователь это покупатель в текущем чате
         userName = Model.IdBuyer!.Equals(currUserId) ?
-            (Model.UserOwner.FullName ?? "User") :
-            (Model.UserBuyer.FullName ?? "User");
+            (Model.UserOwner.FullName ?? "User") : (Model.UserBuyer.FullName ?? "User");
 
         avatarName = Model.IdBuyer!.Equals(currUserId) ?
-            UserRepository.GetAvatar(Model.UserOwner) :
-            UserRepository.GetAvatar(Model.UserBuyer);
+            UserRepository.GetAvatar(Model.UserOwner) : UserRepository.GetAvatar(Model.UserBuyer);
     }
 }
 
@@ -64,6 +62,7 @@
         $(".sendBtn").click(function() {
             const messageText = $("#message").val();
             const chatIdModel = "@Model?.Id";
+
             $.ajax({
                 url: "/Message/SendMessage",
                 type: "POST",
