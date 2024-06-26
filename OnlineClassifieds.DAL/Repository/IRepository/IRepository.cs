@@ -8,7 +8,7 @@ namespace OnlineClassifieds.DAL.Repository.IRepository
             Expression<Func<T, bool>>? filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
             string? includeProps = null,
-                        bool isTracking = false
+            bool isTracking = false
         );
         Task<T?> FirstOrDefault(
             Expression<Func<T, bool>>? filter = null,

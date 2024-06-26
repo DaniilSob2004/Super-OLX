@@ -5,6 +5,7 @@
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var cultureItems = LocOptions.Value.SupportedCultures?.ToList();
 
+    // уникальный идентификатор, чтобы понимать какой список языков использует польз.
     string guid = Guid.NewGuid().ToString();
     string partialViewId = guid.Substring(guid.Length - 8);
 }

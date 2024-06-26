@@ -34,27 +34,3 @@
         </ul>
     }
 </div>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script>
-    // при клике на номер страницы, отправляется AJAX-запрос, и возвращается PartialView
-    $(document).ready(function() {
-        $(".page-item .page-link").click(function() {
-            const numPage = $(this).attr("data-numPage");
-
-            if (numPage && numPage !== undefined) {
-                $.ajax({
-                    url: "/Announcement/SwitchPage",
-                    type: "POST",
-                    data: { numPage: numPage },
-                    success: (data) => {
-                        $("#trending").html(data);  // #trending находится в файле 'Announcement/Index'
-                    },
-                    error: (error) => {
-                        console.error(error);
-                    }
-                });
-            }
-        });
-    });
-</script>

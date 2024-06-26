@@ -6,20 +6,86 @@
         <div class="section__heading text-center mb-35">
             <h2 class="section__heading--maintitle">@Localizer["Announcements_Text"]</h2>
         </div>
-        @*<ul class="product__tab--one product__tab--primary__btn d-flex justify-content-center mb-50">
-            <li class="product__tab--primary__btn__list">Sorted by </li>
-            <li class="product__tab--primary__btn__list active" data-toggle="tab" data-target="#trending">Trending </li>
-            <li class="product__tab--primary__btn__list" data-toggle="tab" data-target="#newarrival">New Arrival  </li>
-        </ul>*@
+        <ul class="product__tab--one product__tab--primary__btn d-flex justify-content-center mb-50">
+            <li class="product__tab--primary__btn__list">Sorted by: </li>
+        </ul>
+        <ul class="product__tab--one product__tab--one_sort product__tab--primary__btn d-flex justify-content-center align-items-center mb-50">
+            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Reset">Reset</li>
+            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Price">Price</li>
+            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Data">Create data</li>
+            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="-1">
+                <select id="sortSelect" class="form-select form-select-lg" aria-label=".form-select-lg example">
+                    <option value="true">По возрастанию</option>
+                    <option value="">По убыванию</option>
+                </select>
+            </li>
+        </ul>
         <div class="tab_content">
-            <!-- вкладка (Trending) -->
-            <div id="trending" class="tab_pane active show mb-5">
+            <div id="main" class="tab_pane active show mb-5">
                 <partial name="_AnnouncementList" model=@Model />
             </div>
-
-            <!-- вкладка (New Arrival) -->
-            @*<div id="newarrival" class="tab_pane">
-            </div>*@
         </div>
     </div>
 </section>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // при перегрузки страницы, будет выделена сортировка
+        const children = $(".product__tab--one_sort").children();
+        const cookieSortField = '@ViewBag.CookieSort';
+
+        if (cookieSortField === "") {
+            children.first().addClass("active");
+        }
+        else {
+            children.each(function () {
+                $(this).removeClass("active");
+                const sortByElem = $(this).attr("data-sort");
+                if (sortByElem === cookieSortField) {
+                    $(this).addClass("active");
+                }
+            });
+        }
+        
+        // при перегрузки страницы, будет выделено направление сортировки
+        const cookieIsAscending = '@ViewBag.CookieIsAscending';  // true or empty
+        $("#sortSelect").val(cookieIsAscending);
+
+        // отправка AJAX-запроса для сортировки
+        function sendAjaxSortRequest(_sortBy, _isAscending) {
+            $.ajax({
+                url: "/Announcement/Sort",
+                type: "POST",
+                data: { sortBy: _sortBy, isAscending: _isAscending },
+                success: (data) => {
+                    $("#main").html(data);  // #main находится в файле 'Views/Announcement/Index'
+                },
+                error: (error) => {
+                    console.error(error);
+                }
+            });
+        }
+
+        // при клике на сортировку, отправляется AJAX-запрос
+        $(".product__tab--one_sort").children().on("click", function () {
+            const sortBy = $(this).attr("data-sort");
+            if (sortBy == "-1") { return; }
+
+            $(".product__tab--one").children().removeClass("active");
+            $(this).addClass("active");
+
+            const isAscending = $("#sortSelect").val();
+
+            sendAjaxSortRequest(sortBy, isAscending);
+        })
+
+        // при выборе выпадающего списка, отправляется AJAX-запрос
+        $("#sortSelect").change(function () {
+            const sortBy = $(".product__tab--one_sort .active").attr("data-sort");
+            const isAscending = $(this).val();
+            sendAjaxSortRequest(sortBy, isAscending);
+        });
+    });
+</script>

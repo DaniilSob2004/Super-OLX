@@ -6,6 +6,7 @@ using System.Globalization;
 
 using OnlineClassifieds.Services;
 using OnlineClassifieds.Hubs;
+using OnlineClassifieds.Models;
 
 using OnlineClassifieds.DAL.Data;
 using OnlineClassifieds.DAL.Repository.IRepository;
@@ -17,11 +18,14 @@ var builder = WebApplication.CreateBuilder(args);
 // add services to the container
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddMemoryCache();
 
 // add my services
 builder.Services.AddScoped<CurrentUserProvider>();
 builder.Services.AddScoped<FilesWorkService>();
 builder.Services.AddSingleton<ICookieService, CookieService>();
+builder.Services.AddSingleton<CacheService<IEnumerable<Announcement>>>();
 
 
 //////////////// LOCALIZATION //////////////////////

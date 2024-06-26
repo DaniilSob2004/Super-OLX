@@ -42,8 +42,8 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
-    // при клике на выбранную категорию, отправляется AJAX-запрос, и возвращается PartialView
     $(document).ready(function() {
+        // при клике на выбранную категорию, отправляется AJAX-запрос, и возвращается PartialView
         $("#idCat_@Model").change(function() {
             const idCat = $(this).val();
             if (idCat && idCat !== undefined) {
@@ -55,7 +55,7 @@
                         $("#titleFilter_@Model").val("");  // строку поиска очищаем
                         $(".predictive__search--box").removeClass("active");  // убираем окно с поиском и категорией
                         $("body").removeClass("predictive__search--box_active");  // убираем эффект от этого окна
-                        $("#trending").html(data);  // #trending находится в файле 'Announcement/Index'
+                        $("#main").html(data);  // #main находится в файле 'Views/Announcement/Index'
                     },
                     error: (error) => {
                         console.error(error);
@@ -77,7 +77,7 @@
                         $("#idCat_@Model option:first").prop("selected", true);  // выбираем меню 'все категории'
                         $(".predictive__search--box").removeClass("active");  // убираем окно с поиском и категорией
                         $("body").removeClass("predictive__search--box_active");  // убираем эффект от этого окна
-                        $("#trending").html(data);  // #trending находится в файле 'Announcement/Index'
+                        $("#main").html(data);  // #trending находится в файле 'Announcement/Index'
                     },
                     error: (error) => {
                         console.error(error);

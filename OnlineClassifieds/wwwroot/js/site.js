@@ -12,6 +12,7 @@ function setChatIdToCookie(chatId) {
 // получаем текущий идентификатор чата из куки}
 function getCookie(name) {
     const cookieArray = document.cookie.split(";");
+    console.log(cookieArray);
     for (let i = 0; i < cookieArray.length; i++) {
         let cookie = cookieArray[i].trim();
         if (cookie.startsWith(name + "=")) {

@@ -10,8 +10,10 @@
 // Preloader
 const preLoader = function () {
   let preloaderWrapper = document.getElementById("preloader");
-  window.onload = () => {
-    preloaderWrapper.classList.add("loaded");
+    window.onload = () => {
+        if (preloaderWrapper) {
+            preloaderWrapper.classList.add("loaded");
+        }
   };
 };
 preLoader();
@@ -389,17 +391,19 @@ const tab = function (wrapper) {
           .forEach(function (list) {
             list.classList.remove("active");
           });
-        listItem.classList.add("active");
-        targetItem.classList.add("active");
-        setTimeout(function () {
-          targetItem.classList.add("show");
-        }, 150);
-        getSiblings(targetItem).forEach(function (pane) {
-          pane.classList.remove("show");
-          setTimeout(function () {
-            pane.classList.remove("active");
-          }, 150);
-        });
+          listItem.classList.add("active");
+          if (targetItem) {
+              targetItem.classList.add("active");
+              setTimeout(function () {
+                  targetItem.classList.add("show");
+              }, 150);
+              getSiblings(targetItem).forEach(function (pane) {
+                  pane.classList.remove("show");
+                  setTimeout(function () {
+                      pane.classList.remove("active");
+                  }, 150);
+              });
+          }
       }
     });
   }

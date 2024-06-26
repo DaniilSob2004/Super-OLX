@@ -13,17 +13,20 @@ namespace OnlineClassifieds.Controllers
     public class AnnouncementController : Controller
     {
         private const int PageSize = 5;
+        private readonly CacheService<IEnumerable<Announcement>> _cacheService;
         private readonly IAnnouncementRepository _announcementRepository;
         private readonly FilesWorkService _filesWorkService;
         private readonly CurrentUserProvider _currentUserProvider;
         private readonly ICookieService _cookieService;
 
         public AnnouncementController(
+            CacheService<IEnumerable<Announcement>> cacheService,
             IAnnouncementRepository announcementRepository,
             FilesWorkService filesWorkService,
             CurrentUserProvider currentUserProvider,
             ICookieService cookieService)
         {
+            _cacheService = cacheService;
             _announcementRepository = announcementRepository;
             _filesWorkService = filesWorkService;
             _currentUserProvider = currentUserProvider;
@@ -31,34 +34,74 @@ namespace OnlineClassifieds.Controllers
         }
 
 
-        private async Task<AnnouncementVM> GetAnnouncementVM(
-            string cookieIdCat = "-1",
-            int numPage = 1,
-            string? titleFilter = null)
+        private async Task UpdateCacheAllAnnouncement()
         {
-            IEnumerable<Announcement> announcements;
-            Func<IQueryable<Announcement>, IOrderedQueryable<Announcement>> orderDateByDesc = 
-                q => q.OrderByDescending(announ => announ.CreateDt);
-            if (cookieIdCat.Equals("-1"))
+            // обновление кэша (будет обращаться к бд)
+            await _cacheService.Create(
+                WC.CacheAllAnnouncementKey,
+                async () => await _announcementRepository.GetAll(includeProps: "Category,User")
+            );
+        }
+
+
+        private async Task<AnnouncementVM> GetAnnouncementVM(
+            string idCat = "-1",
+            string titleSearch = "",
+            int numPage = 1,
+            string? sortBy = null,
+            string isAscending = "true")
+        {
+            // получаем объявления из кэша
+            IEnumerable<Announcement> announcements = await _cacheService.GetOrCreate(
+                WC.CacheAllAnnouncementKey,
+                async () => await _announcementRepository.GetAll(includeProps: "Category,User")
+            );
+
+            // объект сортировки
+            Func<IQueryable<Announcement>, IOrderedQueryable<Announcement>>? sorting = null;
+            if (sortBy is not null)
             {
-                announcements = await _announcementRepository.GetAll(
-                    announ => announ.Title.Contains(titleFilter ?? ""),
-                    orderDateByDesc,
-                    includeProps: "Category,User"
-                );
+                switch (sortBy)
+                {
+                    case WC.SortByField_Reset:
+                        if (!isAscending.Equals("")) { sorting = q => q.OrderBy(announ => announ.CreateDt); }
+                        else { sorting = q => q.OrderByDescending(announ => announ.CreateDt); }
+                        break;
+
+                    case WC.SortByField_Price:
+                        if (!isAscending.Equals("")) { sorting = q => q.OrderBy(announ => announ.Price); }
+                        else { sorting = q => q.OrderByDescending(announ => announ.Price); }
+                        break;
+
+                    case WC.SortByField_Data:
+                        if (!isAscending.Equals("")) { sorting = q => q.OrderBy(announ => announ.CreateDt); }
+                        else { sorting = q => q.OrderByDescending(announ => announ.CreateDt); }
+                        break;
+                }
             }
-            else
+
+            // фильтрация
+            announcements = idCat.Equals("-1") ?
+                announcements.Where(announ => announ.Title.ToLower().Contains(titleSearch.ToLower())) :
+                announcements.Where(announ => announ.Category.Id.ToString().Equals(idCat));
+
+            // сортировка
+            if (sorting is not null)
             {
-                announcements = await _announcementRepository.GetAll(
-                    announ => announ.Category.Id.ToString().Equals(cookieIdCat),
-                    orderDateByDesc,
-                    includeProps: "Category,User"
-                );
+                IQueryable<Announcement> queryableAnnouncements = announcements.AsQueryable();
+                queryableAnnouncements = sorting(queryableAnnouncements);
+                announcements = queryableAnnouncements.ToList();
             }
+
+            // пагинация
+            Pager pager = new(announcements.Count(), numPage, PageSize);
+            int numsSkip = (numPage - 1) * PageSize;
+            announcements = announcements.ToList().Skip(numsSkip).Take(PageSize);
+
             return new AnnouncementVM()
             {
                 Announcements = announcements,
-                Pager = new Pager(announcements.Count(), numPage, PageSize)
+                Pager = pager
             };
         }
 
@@ -67,25 +110,35 @@ namespace OnlineClassifieds.Controllers
             // получаем выбранную категорию и поисковую строку
             string cookieIdCat = _cookieService.GetCookie(WC.CookieCategoryIdKey) ?? "-1";
             string cookieTitleSearch = _cookieService.GetCookie(WC.CookieSearchTitleKey) ?? String.Empty;
-            return View(await GetAnnouncementVM(cookieIdCat, 1, cookieTitleSearch));
+            string? cookieSort = _cookieService.GetCookie(WC.CookieSortKey) ?? null;
+            string cookieIsAscending = _cookieService.GetCookie(WC.CookieIsAscendingKey) ?? "";
+
+            ViewBag.CookieSort = cookieSort;  // передаём название поля сортировки во view
+            ViewBag.CookieIsAscending = cookieIsAscending;  // передаём направление сортировки во view
+
+            return View(await GetAnnouncementVM(cookieIdCat, cookieTitleSearch, 1, cookieSort, cookieIsAscending));
         }
 
         [HttpPost]
         public async Task<IActionResult> SearchByCategory(string idCat = "-1")
         {
             _cookieService.SetCookie(WC.CookieSearchTitleKey, String.Empty);  // обнуляем данные о поисковой строке
-            _cookieService.SetCookie(WC.CookieCategoryIdKey, idCat, DateTimeOffset.UtcNow.AddMinutes(1));
-            return PartialView("_AnnouncementList", await GetAnnouncementVM(idCat));
+            _cookieService.SetCookie(WC.CookieCategoryIdKey, idCat, DateTimeOffset.UtcNow.AddMinutes(1));  // добавляем id категории
+            string? cookieSort = _cookieService.GetCookie(WC.CookieSortKey) ?? null;
+            string cookieIsAscending = _cookieService.GetCookie(WC.CookieIsAscendingKey) ?? "";
+            return PartialView("_AnnouncementList", await GetAnnouncementVM(idCat, sortBy: cookieSort, isAscending: cookieIsAscending));
         }
 
         [HttpPost]
         public async Task<IActionResult> SwitchPage(int numPage = 1)
         {
-            // получаем выбранную категорию и поисковую строку
+            // получаем выбранную категорию, поисковую строку и сортировку
             if (numPage < 1) { numPage = 1; }
             string cookieIdCat = _cookieService.GetCookie(WC.CookieCategoryIdKey) ?? "-1";
             string cookieTitleSearch = _cookieService.GetCookie(WC.CookieSearchTitleKey) ?? String.Empty;
-            return PartialView("_AnnouncementList", await GetAnnouncementVM(cookieIdCat, numPage, cookieTitleSearch));
+            string? cookieSort = _cookieService.GetCookie(WC.CookieSortKey) ?? null;
+            string cookieIsAscending = _cookieService.GetCookie(WC.CookieIsAscendingKey) ?? "";
+            return PartialView("_AnnouncementList", await GetAnnouncementVM(cookieIdCat, cookieTitleSearch, numPage, cookieSort, cookieIsAscending));
         }
 
         [HttpPost]
@@ -93,7 +146,20 @@ namespace OnlineClassifieds.Controllers
         {
             _cookieService.SetCookie(WC.CookieCategoryIdKey, "-1");  // обнуляем данные о выбранной категории
             _cookieService.SetCookie(WC.CookieSearchTitleKey, _titleFilter, DateTimeOffset.UtcNow.AddMinutes(1));
-            return PartialView("_AnnouncementList", await GetAnnouncementVM(titleFilter: _titleFilter));
+            string? cookieSort = _cookieService.GetCookie(WC.CookieSortKey) ?? null;
+            string cookieIsAscending = _cookieService.GetCookie(WC.CookieIsAscendingKey) ?? "";
+            return PartialView("_AnnouncementList", await GetAnnouncementVM(titleSearch: _titleFilter, sortBy: cookieSort, isAscending: cookieIsAscending));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Sort(string? sortBy = null, string isAscending = "true")
+        {
+            // один обработчик для выбора сортировки и выбора направления
+            _cookieService.SetCookie(WC.CookieSortKey, sortBy ?? "");
+            _cookieService.SetCookie(WC.CookieIsAscendingKey, isAscending ?? "");
+            string cookieIdCat = _cookieService.GetCookie(WC.CookieCategoryIdKey) ?? "-1";
+            string cookieTitleSearch = _cookieService.GetCookie(WC.CookieSearchTitleKey) ?? String.Empty;
+            return PartialView("_AnnouncementList", await GetAnnouncementVM(cookieIdCat, cookieTitleSearch, 1, sortBy, isAscending ?? ""));
         }
 
 

@@ -1,13 +1,8 @@
 ﻿@model OnlineClassifieds.ViewModels.AnnouncementVM
 
-@* кол-во обявлений которые нужно пропустить *@
-@{ int numsSkip = (Model.Pager.CurrentPage - 1) * Model.Pager.PageSize; }
-
 <div class="product__section--inner mb-5">
     <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
-        @foreach (var announ in Model.Announcements
-            .Skip(numsSkip)
-            .Take(Model.Pager.PageSize))
+        @foreach (var announ in Model.Announcements)
         {
             <partial name="_AnnouncementCart" model=@announ />  <!-- view для карточки объявления -->
         }
@@ -15,3 +10,27 @@
 </div>
 
 @await Html.PartialAsync("_Pager", Model.Pager)  <!-- View для отображения пагинации -->
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // при клике на номер страницы, отправляется AJAX-запрос, и возвращается PartialView
+        $(".page-item .page-link").click(function () {
+            const numPage = $(this).attr("data-numPage");
+
+            if (numPage && numPage !== undefined) {
+                $.ajax({
+                    url: "/Announcement/SwitchPage",
+                    type: "POST",
+                    data: { numPage: numPage },
+                    success: (data) => {
+                        $("#main").html(data);  // #main находится в файле 'Views/Announcement/Index'
+                    },
+                    error: (error) => {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+    });
+</script>
