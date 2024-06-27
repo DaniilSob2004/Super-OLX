@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 using OnlineClassifieds.Services;
 using OnlineClassifieds.Hubs;
@@ -24,8 +25,13 @@ builder.Services.AddMemoryCache();
 // add my services
 builder.Services.AddScoped<CurrentUserProvider>();
 builder.Services.AddScoped<FilesWorkService>();
+builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 builder.Services.AddSingleton<ICookieService, CookieService>();
 builder.Services.AddSingleton<CacheService<IEnumerable<Announcement>>>();
+
+// сервис объект Smtp settings
+var smtpSettings = builder.Configuration.GetSection("Smtp").Get<SmtpSettings>();
+builder.Services.AddSingleton(smtpSettings);
 
 
 //////////////// LOCALIZATION //////////////////////
