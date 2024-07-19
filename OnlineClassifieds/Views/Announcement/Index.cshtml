@@ -7,16 +7,16 @@
             <h2 class="section__heading--maintitle">@Localizer["Announcements_Text"]</h2>
         </div>
         <ul class="product__tab--one product__tab--primary__btn d-flex justify-content-center mb-50">
-            <li class="product__tab--primary__btn__list">Sorted by: </li>
+            <li class="product__tab--primary__btn__list">@Localizer["SortedBy_Text"]: </li>
         </ul>
         <ul class="product__tab--one product__tab--one_sort product__tab--primary__btn d-flex justify-content-center align-items-center mb-50">
-            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Reset">Reset</li>
-            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Price">Price</li>
-            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Data">Create data</li>
+            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Reset">@Localizer["Reset_Text"]</li>
+            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Price">@Localizer["Price_Text"]</li>
+            <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="@WC.SortByField_Data">@Localizer["CreateData_Text"]</li>
             <li class="product__tab--primary__btn__list" data-toggle="tab" data-sort="-1">
                 <select id="sortSelect" class="form-select form-select-lg" aria-label=".form-select-lg example">
-                    <option value="true">По возрастанию</option>
-                    <option value="">По убыванию</option>
+                    <option value="true">@Localizer["Ascending_Text"]</option>
+                    <option value="">@Localizer["Descending_Text"]</option>
                 </select>
             </li>
         </ul>

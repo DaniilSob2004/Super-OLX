@@ -120,6 +120,15 @@
   <data name="Announcements_Text" xml:space="preserve">
     <value>Announcements</value>
   </data>
+  <data name="Ascending_Text" xml:space="preserve">
+    <value>Ascending</value>
+  </data>
+  <data name="CreateData_Text" xml:space="preserve">
+    <value>Create data</value>
+  </data>
+  <data name="Descending_Text" xml:space="preserve">
+    <value>Descending</value>
+  </data>
   <data name="EmptyUserAnnoun_Text" xml:space="preserve">
     <value>You don't have any announcements...</value>
   </data>
@@ -131,6 +140,15 @@
   </data>
   <data name="OurTeam_Title" xml:space="preserve">
     <value>Our Team</value>
+  </data>
+  <data name="Price_Text" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Reset_Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="SortedBy_Text" xml:space="preserve">
+    <value>Sorted by</value>
   </data>
   <data name="WhoWeAre_Text" xml:space="preserve">
     <value>Welcome to Online Classifieds, your number one source for all things related to buying and selling. We're dedicated to giving you the very best of classified advertisements, with a focus on user experience, reliability, and trustworthiness.</value>

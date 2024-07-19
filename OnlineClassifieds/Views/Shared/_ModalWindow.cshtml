@@ -1,0 +1,15 @@
+﻿@inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> LocalizerMainTemp
+
+<div class="modalBackground">
+    <div class="modalActive">
+        <div class="modalClose">
+            <img src="~/logo/close.png" />
+        </div>
+        <div>
+            <h4 id="modalTitle"></h4>
+            <h6 id="modalMessage"></h6>
+            <button class="btn btn-danger mt-3 middle_font_size modalBtnYes">@LocalizerMainTemp["Yes_Text"]</button>
+            <button class="btn btn-primary mt-3 middle_font_size modalBtnNo">@LocalizerMainTemp["No_Text"]</button>
+        </div>
+    </div>
+</div>

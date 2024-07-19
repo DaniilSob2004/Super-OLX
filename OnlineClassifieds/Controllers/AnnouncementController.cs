@@ -39,8 +39,24 @@ namespace OnlineClassifieds.Controllers
             // обновление кэша (будет обращаться к бд)
             await _cacheService.Create(
                 WC.CacheAllAnnouncementKey,
-                async () => await _announcementRepository.GetAll(includeProps: "Category,User")
+                async () => await _announcementRepository.GetAll(
+                    a => a.IsActive,
+                    includeProps: "Category,User"
+                )
             );
+        }
+
+
+        private async Task ChangeStateAnnouncement(string id, bool isActivate)
+        {
+            if (!Guid.TryParse(id, out Guid announId)) { return; }
+
+            if (isActivate) { await _announcementRepository.Activate(announId); }
+            else { await _announcementRepository.Deactivate(announId); }
+            
+            await _announcementRepository.Save();
+
+            await UpdateCacheAllAnnouncement();  // обновляем кэш
         }
 
 
@@ -54,7 +70,10 @@ namespace OnlineClassifieds.Controllers
             // получаем объявления из кэша
             IEnumerable<Announcement> announcements = await _cacheService.GetOrCreate(
                 WC.CacheAllAnnouncementKey,
-                async () => await _announcementRepository.GetAll(includeProps: "Category,User")
+                async () => await _announcementRepository.GetAll(
+                    a => a.IsActive,
+                    includeProps: "Category,User"
+                )
             );
 
             // объект сортировки
@@ -175,24 +194,26 @@ namespace OnlineClassifieds.Controllers
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Create(Announcement announcement)
         {
-            if ((announcement.Category is not null || announcement.User is not null) && !ModelState.IsValid)
+            try
             {
-                return RedirectToAction(nameof(Create));
-            }
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count > 0)
+                {
+                    string newFilename = await _filesWorkService.DownloadFileForm(WC.ImageAnnouncementPath, files[0]);
+                    announcement.Image = newFilename;
+                }
 
-            var files = HttpContext.Request.Form.Files;
-            if (files.Count > 0)
-            {
-                string newFilename = await _filesWorkService.DownloadFileForm(WC.ImageAnnouncementPath, files[0]);
-                announcement.Image = newFilename;
-            }
+                announcement.IdUser = _currentUserProvider.GetCurrentUserId();
+                await _announcementRepository.Add(announcement);
+                await _announcementRepository.Save();
 
-            announcement.IdUser = _currentUserProvider.GetCurrentUserId();
-            await _announcementRepository.Add(announcement);
-            await _announcementRepository.Save();
+                await UpdateCacheAllAnnouncement();  // обновляем кэш
+            }
+            catch (Exception) { }
 
             return Redirect(nameof(GetUserAnnouncement));
         }
+
 
         [Authorize]
         public async Task<IActionResult> GetUserAnnouncement()
@@ -209,6 +230,70 @@ namespace OnlineClassifieds.Controllers
             );
 
             return View(announcements);
+        }
+
+
+        [Authorize]
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (!Guid.TryParse(id, out Guid announId)) { return NotFound(); }
+
+            var announcement = await _announcementRepository.FirstOrDefault(
+                a => Guid.Equals(announId, a.Id),
+                includeProps: "Category"
+            );
+            if (announcement is null) { return NotFound(); }
+
+            ViewData["CategoryItems"] = _announcementRepository.GetAllDropDownList("Category");
+            return View(nameof(Create), announcement);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Edit(Announcement editAnnouncement)
+        {
+            try
+            {
+                Announcement? announcement = await _announcementRepository.FirstOrDefault(
+                a => a.Id.Equals(editAnnouncement.Id)
+            );
+                if (announcement is null) { return NotFound(); }
+
+                // обработка изображения
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count != 0)
+                {
+                    // загружаем картинку на сервер и сохраняем
+                    string newFilename = await _filesWorkService.DownloadFileForm(WC.ImageAnnouncementPath, files[0], announcement.Image);
+                    editAnnouncement.Image = newFilename;
+                }
+                else
+                {
+                    editAnnouncement.Image = announcement.Image;
+                }
+
+                _announcementRepository.Update(announcement, editAnnouncement);
+                await _announcementRepository.Save();
+
+                await UpdateCacheAllAnnouncement();  // обновляем кэш
+            }
+            catch (Exception) { }
+
+            return RedirectToAction(nameof(GetUserAnnouncement));
+        }
+
+
+        [Authorize]
+        public async Task Deactivate(string id)
+        {
+            await ChangeStateAnnouncement(id, false);
+        }
+
+        [Authorize]
+        public async Task Activate(string id)
+        {
+            await ChangeStateAnnouncement(id, true);
         }
     }
 }

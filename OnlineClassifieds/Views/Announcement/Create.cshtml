@@ -1,14 +1,25 @@
 ﻿@model OnlineClassifieds.Models.Announcement
 
+@{
+    string textAction = (Model is null) ? "Create" : "Edit";
+}
+
 <div class="row justify-content-center">
     <div class="col-xl-6">
         <div class="account__login register">
+            @if (Model is not null)
+            {
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <img src="@WC.ImageAnnouncementPath@Model.Image" class="big_user_avatar" />
+                </div>
+            }
             <div class="account__login--header mb-25">
-                <h2 class="account__login--header__title h3 mb-10">Create an Announcement</h2>
+                <h2 class="account__login--header__title h3 mb-10">@textAction an Announcement</h2>
                 <p class="account__login--header__desc">Describe in detail</p>
             </div>
             <div class="account__login--inner">
-                <form method="POST" id="createAnnounForm" asp-action="Create" enctype="multipart/form-data">
+                <form method="POST" id="createAnnounForm" asp-action="@textAction" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
                     <div>
                         <label asp-for="Image" class="form-label">@Html.DisplayNameFor(model => model.Image)</label>
                         <input type="file" name="files" id="uploadBox" class="form-control form-control-lg">
@@ -39,7 +50,7 @@
                         <input asp-for="City" class="account__login--input">
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
-                    <button class="account__login--btn primary__btn mb-10" type="submit">Create</button>
+                    <button class="account__login--btn primary__btn mb-10" type="submit">@textAction</button>
                 </form>
             </div>
         </div>

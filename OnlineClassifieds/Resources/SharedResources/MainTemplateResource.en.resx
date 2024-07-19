@@ -129,6 +129,12 @@
   <data name="AboutUs_Text3_Footer" xml:space="preserve">
     <value>Join us and start your trading success now!</value>
   </data>
+  <data name="Activate_State_Text" xml:space="preserve">
+    <value>Activated</value>
+  </data>
+  <data name="Activate_Text" xml:space="preserve">
+    <value>Activate</value>
+  </data>
   <data name="AddAnnouncment_Menu" xml:space="preserve">
     <value>Add Announcment</value>
   </data>
@@ -137,6 +143,12 @@
   </data>
   <data name="Categories_Text" xml:space="preserve">
     <value>Categories</value>
+  </data>
+  <data name="Deactive_State_Text" xml:space="preserve">
+    <value>Deactivated</value>
+  </data>
+  <data name="Deactive_Text" xml:space="preserve">
+    <value>Deactivate</value>
   </data>
   <data name="Delete_Text" xml:space="preserve">
     <value>Delete</value>
@@ -193,6 +205,9 @@
   <data name="Newsletter_Text2" xml:space="preserve">
     <value>Subscribe to our newsletter now:</value>
   </data>
+  <data name="No_Text" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="OnlineClassifieds_Text1" xml:space="preserve">
     <value>Online Classifieds</value>
   </data>
@@ -223,5 +238,8 @@
   </data>
   <data name="Wishlist_Text" xml:space="preserve">
     <value>Wish List</value>
+  </data>
+  <data name="Yes_Text" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

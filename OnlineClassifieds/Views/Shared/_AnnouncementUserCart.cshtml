@@ -2,14 +2,18 @@
 @inject IAnnouncementRepository AnnouncementRepository
 @inject IHtmlLocalizer<OnlineClassifieds.SharedResources.MainTemplateResource> Localizer
 
-@{ string imageName = AnnouncementRepository.GetImage(Model); }
+@{
+    string imageName = AnnouncementRepository.GetImage(Model);
+    string isActive = Model.IsActive ? $" -- {Localizer["Activate_State_Text"].Value} --" : $" -- {Localizer["Deactive_State_Text"].Value} --";
+    string isActiveColor = Model.IsActive ? "text-success" : "text-danger";
+}
 
-<div class="row p-2 bg-white border rounded pointer">
+<div class="row p-2 bg-white border rounded pointer" data-id="@Model.Id">
     <div class="col-md-3 mt-1 d-flex justify-content-center">
         <img src=@WC.ImageAnnouncementPath@imageName class="img-fluid img-responsive rounded product-image">
     </div>
     <div class="col-md-6 mt-1">
-        <h5 class="title_announcement">@Model.Title</h5>
+        <h5 class="title_announcement fw-bold">@Model.Title <span class="@isActiveColor isActiveText">@isActive</span></h5>
         <p class="text-justify text-truncate para mb-0">
             @Model.CreateDt.ToLongDateString()<br/>
             @Model.CreateDt.ToLongTimeString()
@@ -26,8 +30,16 @@
             <h4 class="mr-1">₴@Model.Price</h4>
         </div>
         <div class="d-flex flex-column mt-4">
-            <a class="btn btn-primary btn-sm mt-2 middle_font_size">@Localizer["Edit_Text"]</a>
-            <a class="btn btn-danger btn-sm mt-2 middle_font_size">@Localizer["Delete_Text"]</a>
+            <a asp-controller="Announcement" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-sm mt-2 middle_font_size">@Localizer["Edit_Text"]</a>
+            <button class="btn @(Model.IsActive ? "btn-danger" : "btn-success") btn-sm mt-2 middle_font_size btn-state-announ"
+                    data-id="@Model.Id"
+                    data-action="@(Model.IsActive ? "deactiveAnnoun" : "activeAnnoun")"
+                    data-deactivate-text="@Localizer["Deactive_Text"]"
+                    data-activate-text="@Localizer["Activate_Text"]"
+                    data-deactive-state-text="@Localizer["Deactive_State_Text"]"
+                    data-active-state-text="@Localizer["Activate_State_Text"]">
+                @(Model.IsActive ? Localizer["Deactive_Text"].Value : Localizer["Activate_Text"].Value)
+            </button>
         </div>
     </div>
 </div>

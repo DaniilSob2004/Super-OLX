@@ -37,9 +37,35 @@ namespace OnlineClassifieds.DAL.Repository
             }
         }
 
-        public void Update(Announcement announcement)
+        public void Update(Announcement announcement, Announcement oldAnnouncement)
         {
+            announcement.Title = oldAnnouncement.Title;
+            announcement.IdCat = oldAnnouncement.IdCat;
+            announcement.Price = oldAnnouncement.Price;
+            announcement.Description = oldAnnouncement.Description;
+            announcement.City = oldAnnouncement.City;
+            announcement.Image = oldAnnouncement.Image;
             _db.Update(announcement);
+        }
+
+        public async Task Deactivate(Guid id)
+        {
+            var announ = await FirstOrDefault(a => a.Id.Equals(id));
+            if (announ is not null)
+            {
+                announ.IsActive = false;
+                _db.Update(announ);
+            }
+        }
+
+        public async Task Activate(Guid id)
+        {
+            var announ = await FirstOrDefault(a => a.Id.Equals(id));
+            if (announ is not null)
+            {
+                announ.IsActive = true;
+                _db.Update(announ);
+            }
         }
 
         public string GetImage(Announcement announcement)
