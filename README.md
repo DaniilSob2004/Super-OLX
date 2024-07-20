@@ -6,6 +6,8 @@
   - Browsing announcements by category
   - Create your announcement
   - Searching for announcements by category
+  - Sorting announcements
+  - Editing/deactivating/activating your announcements
 
 
   //////////////////////////////////////
@@ -19,6 +21,8 @@
   - Просмотр объявлений по категориям
   - Создание своего объявления
   - Поиск объявлений по категориям
+  - Сортировка объявлений
+  - Редактирование/деактивирование/активирование своих объявлений
 
 
 ![9](https://github.com/user-attachments/assets/4e9e26a4-645d-4cac-9287-26fd77057e62)
